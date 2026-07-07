@@ -1,0 +1,719 @@
+# PRODUCTIVITY & KNOWLEDGE PLATFORM
+
+# 06_DEVELOPMENT_GUIDE.md
+
+---
+
+# Document Information
+
+| Field | Value |
+|-------|-------|
+| Project | Productivity & Knowledge Platform |
+| Document | Development Guide |
+| Version | 2.0 |
+| Status | Living Document |
+| Last Updated Milestone | Authentication Module (JWT v1) |
+| Current Milestone | Utility Module – Image → PDF |
+
+---
+
+# 1. Purpose
+
+This document defines **how the project should be developed**.
+
+Unlike PROJECT_SPECIFICATION.md, which explains **what** is being built, this document explains **how every feature should be designed, implemented, reviewed, and evolved**.
+
+Every future contributor—including future ChatGPT sessions—should follow these standards.
+
+---
+
+# 2. Engineering Philosophy
+
+This project is intentionally built like a real software engineering project rather than a tutorial.
+
+Every implementation should optimize for:
+
+- Understanding
+- Maintainability
+- Readability
+- Correctness
+- Scalability
+- Long-term evolution
+
+rather than simply making the code work.
+
+---
+
+# 3. Core Development Principles
+
+## Principle 1
+
+### Understand Before Implementing
+
+Before writing code, always answer:
+
+- What business problem exists?
+- Why is this feature needed?
+- What are the constraints?
+- What alternatives exist?
+- Why is the chosen solution appropriate?
+
+Code should always be the final step—not the first.
+
+---
+
+## Principle 2
+
+### Simplicity First
+
+Always begin with the simplest implementation that satisfies the current requirements.
+
+Avoid introducing:
+
+- Generic abstractions
+- Design patterns
+- Frameworks
+- Additional layers
+
+unless they solve a real problem.
+
+---
+
+## Principle 3
+
+### Responsibility-Driven Design
+
+Every class should own exactly one responsibility.
+
+Instead of asking:
+
+> "Where can I write this code?"
+
+Ask:
+
+> "Which class should own this responsibility?"
+
+This question should guide future architectural decisions.
+
+---
+
+## Principle 4
+
+### Features Drive Learning
+
+The project teaches concepts through feature implementation.
+
+Never study technologies in isolation.
+
+Instead:
+
+Business Requirement
+
+↓
+
+Architecture
+
+↓
+
+Implementation
+
+↓
+
+Learning
+
+Example
+
+Image → PDF naturally introduces MultipartFile, streaming, and file validation.
+
+---
+
+# 4. Coding Standards
+
+## Constructor Injection Only
+
+Always use constructor injection.
+
+Preferred:
+
+```java
+@RequiredArgsConstructor
+@Service
+public class UserService {
+
+    private final UserRepository repository;
+
+}
+```
+
+Never use:
+
+```java
+@Autowired
+private UserRepository repository;
+```
+
+Reason:
+
+- Immutable dependencies
+- Easier testing
+- Better readability
+
+---
+
+## Records for DTOs
+
+All Request and Response DTOs should use Java Records.
+
+Example
+
+```java
+public record LoginRequest(
+    String email,
+    String password
+) {
+}
+```
+
+Reason
+
+- Immutable
+- Concise
+- Better intent
+
+---
+
+## Entities Are Persistence Models
+
+Entities represent database structure.
+
+They must not be exposed directly through APIs.
+
+Always convert:
+
+Entity
+
+↓
+
+DTO
+
+---
+
+## Controllers Stay Thin
+
+Controllers should only:
+
+- Receive requests
+- Validate requests
+- Call services
+- Return responses
+
+Controllers must never contain business logic.
+
+---
+
+## Services Own Business Logic
+
+Services should:
+
+- Coordinate repositories
+- Apply business rules
+- Validate business constraints
+- Delegate specialized work
+
+Services should not know HTTP details.
+
+---
+
+## Repositories Only Persist Data
+
+Repositories should:
+
+- Query the database
+- Save entities
+- Delete entities
+
+Nothing more.
+
+---
+
+## Configuration Is Centralized
+
+Configuration belongs only in the config package.
+
+Use:
+
+@ConfigurationProperties
+
+instead of scattered @Value annotations whenever appropriate.
+
+---
+
+# 5. Package Organization Rules
+
+Every new class must belong to an existing layer.
+
+Current layers:
+
+config
+
+controller
+
+service
+
+repository
+
+entity
+
+dto
+
+security
+
+exception
+
+util
+
+Avoid creating new packages unless a clear architectural need exists.
+
+---
+
+# 6. Naming Conventions
+
+## Controllers
+
+Feature + Controller
+
+Examples
+
+UserController
+
+AuthController
+
+UtilityController
+
+---
+
+## Services
+
+Feature + Service
+
+Examples
+
+AuthService
+
+JwtService
+
+UtilityJobService
+
+---
+
+## Repositories
+
+Entity + Repository
+
+Examples
+
+UserRepository
+
+UtilityJobRepository
+
+---
+
+## DTOs
+
+Request
+
+```
+CreateUserRequest
+```
+
+Response
+
+```
+LoginResponse
+```
+
+---
+
+## Exceptions
+
+Use meaningful names.
+
+Examples
+
+UserNotFoundException
+
+InvalidCredentialsException
+
+JobNotFoundException
+
+---
+
+# 7. Error Handling Standards
+
+All exceptions should be centralized.
+
+Controllers should never manually construct error responses.
+
+Use:
+
+GlobalExceptionHandler
+
+↓
+
+ApiErrorResponse
+
+Current format
+
+```json
+{
+  "timestamp": "...",
+  "status": 404,
+  "error": "Not Found",
+  "message": "...",
+  "path": "/..."
+}
+```
+
+Future validation errors should also follow this structure.
+
+---
+
+# 8. Security Development Rules
+
+Authentication should remain centralized.
+
+Controllers should never manually inspect JWTs.
+
+JwtFilter owns:
+
+- Token validation
+- Authentication creation
+- SecurityContext population
+
+JwtService owns:
+
+- JWT generation
+- JWT validation
+- Claim extraction
+
+Never mix these responsibilities.
+
+---
+
+# 9. Feature Development Workflow
+
+Every future feature should follow the same workflow.
+
+## Step 1
+
+Understand the business problem.
+
+---
+
+## Step 2
+
+Define functional requirements.
+
+---
+
+## Step 3
+
+Discuss architecture.
+
+---
+
+## Step 4
+
+Design REST API.
+
+---
+
+## Step 5
+
+Design DTOs.
+
+---
+
+## Step 6
+
+Discuss entities (if required).
+
+---
+
+## Step 7
+
+Implement incrementally.
+
+---
+
+## Step 8
+
+Review implementation.
+
+---
+
+## Step 9
+
+Refactor only if justified.
+
+---
+
+## Step 10
+
+Update documentation.
+
+---
+
+# 10. Code Review Standards
+
+Every completed implementation should be reviewed.
+
+Review format:
+
+## Overall Score
+
+Example
+
+9.5 / 10
+
+---
+
+## Strengths
+
+What was done well.
+
+---
+
+## Architectural Review
+
+Responsibilities
+
+Layering
+
+SRP
+
+Design
+
+---
+
+## Code Review
+
+Naming
+
+Readability
+
+Spring usage
+
+Potential improvements
+
+---
+
+## Trade-offs
+
+Alternative implementations.
+
+Why the current solution is appropriate.
+
+---
+
+## Production Considerations
+
+Would this design scale?
+
+Would this design be maintainable?
+
+Would this design be acceptable in production?
+
+---
+
+## Interview Perspective
+
+Explain which interview topics are reinforced.
+
+---
+
+## Next Exercise
+
+Continue learning incrementally.
+
+---
+
+# 11. Documentation Policy
+
+Every completed milestone should update:
+
+- PROJECT_SPECIFICATION.md
+- ARCHITECTURE.md
+- DECISION_LOG.md
+- ROADMAP.md
+- LEARNING_LOG.md
+- DEVELOPMENT_GUIDE.md
+- HANDOFF.md
+
+Documentation is considered part of the implementation.
+
+---
+
+# 12. Architecture Evolution Policy
+
+The architecture should evolve only when justified.
+
+Current
+
+Layered Modular Monolith
+
+↓
+
+Future
+
+Domain-oriented Modules
+
+↓
+
+Selective Clean Architecture
+
+↓
+
+Async Processing
+
+↓
+
+Storage Abstraction
+
+↓
+
+Performance Optimization
+
+Avoid redesigning the project for theoretical reasons.
+
+---
+
+# 13. Mentoring Workflow
+
+Future ChatGPT sessions should continue following this workflow.
+
+## Before Coding
+
+Explain:
+
+- Real-world problem
+- Business motivation
+- Alternatives
+- Trade-offs
+
+---
+
+## During Coding
+
+Ask the developer to attempt implementation first.
+
+Provide hints before complete solutions.
+
+Review code critically.
+
+Encourage reasoning.
+
+---
+
+## After Coding
+
+Discuss:
+
+- Refactoring
+- Production improvements
+- Best practices
+- Interview relevance
+
+The objective is to build engineering judgment rather than simply finish features.
+
+---
+
+# 14. Communication Style
+
+Future mentoring should be:
+
+- Professional
+- Encouraging
+- Honest
+- Technically rigorous
+
+Avoid excessive praise.
+
+Instead:
+
+Explain what is correct.
+
+Explain why.
+
+Suggest improvements.
+
+Challenge assumptions respectfully.
+
+---
+
+# 15. Definition of High-Quality Code
+
+Every implementation should satisfy:
+
+✓ Correctness
+
+✓ Readability
+
+✓ Single Responsibility
+
+✓ Clear naming
+
+✓ Layered architecture
+
+✓ Appropriate abstractions
+
+✓ Meaningful exception handling
+
+✓ Consistent API design
+
+✓ Maintainability
+
+If an implementation works but violates these principles, it should be improved before being considered complete.
+
+---
+
+# 16. Future Engineering Topics
+
+The following topics should be introduced only when the project naturally requires them.
+
+- Transactions
+- Async Processing
+- Scheduling
+- File Storage Strategies
+- Testing
+- Caching
+- Performance Profiling
+- Search
+- Messaging
+- Distributed Systems
+
+Avoid teaching them prematurely.
+
+---
+
+# 17. Definition of Success
+
+This project is successful when:
+
+- The application is production-inspired.
+- The architecture remains maintainable.
+- Every feature teaches a new engineering concept.
+- Documentation stays synchronized with implementation.
+- The developer learns to reason about software architecture independently.
+
+The final goal is not simply to complete a backend application.
+
+The final goal is to develop the mindset and skills of a professional backend engineer.
+
+---
+
+# End of Document
+
+This guide defines the engineering standards, coding conventions, mentoring workflow, and quality expectations for the entire project.
+
+Every future implementation should follow this document to maintain consistency across the codebase and the learning process.
