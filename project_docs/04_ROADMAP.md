@@ -10,11 +10,10 @@
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Development Roadmap |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Authentication Module (JWT v1) |
-| Current Milestone | Utility Module – Image → PDF |
-
+| Last Updated Milestone | Utility Module v1 (Image → PDF) |
+| Current Milestone | Utility Module v2 (PDF → Image) |
 ---
 
 # 1. Purpose
@@ -128,7 +127,9 @@ Search & Information Retrieval
 | Environment Setup | ✅ Completed | High |
 | Project Foundation | ✅ Completed | High |
 | Authentication & Security | ✅ Completed | High |
-| Utility Module | 🚧 Current | High |
+| Utility Module v1 (Image → PDF) | ✅ Completed | High |
+| Utility Module v2 (PDF → Image) | 🚧 Current | High |
+| Utility Module v3 | Planned | Medium |
 | OCR Module | Planned | Medium |
 | AI Module | Planned | Medium |
 | Knowledge Module | Planned | Medium |
@@ -229,27 +230,121 @@ Concepts Learned
 
 ---
 
-# 5. Current Milestone
+## Milestone 3
 
-# Utility Module v1
+### Utility Module v1 – Image → PDF
 
 Status
 
-Current
+Completed
 
-Priority
+Achievements
 
-Highest
+- Multipart file upload support
+- PNG and JPEG validation
+- Maximum file count validation
+- Maximum file size validation
+- Multi-page PDF generation
+- Automatic image scaling while preserving aspect ratio
+- Downloadable PDF response
+- Feature-specific exception handling
+- Stateless utility processing
+
+Concepts Learned
+
+- Multipart requests
+- MultipartFile
+- File validation
+- BufferedImage
+- Apache PDFBox
+- Resource management
+- In-memory file generation
+- ByteArrayResource
+- Feature-oriented modular architecture
+
 
 ---
 
 ## Objective
 
-Deliver the first business feature of the application.
+Expand the utility platform by introducing PDF → Image conversion.
 
-Image → PDF
+This milestone introduces the first utility capable of producing multiple output files from a single input document.
 
-This milestone transitions the project from infrastructure development to user-facing functionality.
+---
+
+## Business Requirement
+
+Guest users should be able to:
+
+- Upload a PDF document.
+- Select an output image format.
+- Download all generated pages.
+
+Authenticated users will additionally receive:
+
+- Utility history
+- Job tracking
+- Future download management
+
+---
+
+## Learning Objectives
+
+This milestone introduces:
+
+- PDF parsing
+- Rendering PDF pages
+- ZIP generation
+- Multiple file responses
+- Memory optimization
+- Temporary resource management
+- Utility pipeline evolution
+
+---
+
+## Expected Deliverables
+
+### PDF Upload
+
+Support:
+
+- PDF documents
+
+---
+
+### Image Generation
+
+Generate one image for each PDF page.
+
+Initially:
+
+PNG output.
+
+Future:
+
+JPEG and WEBP.
+
+---
+
+### Response
+
+Return generated images as a ZIP archive.
+
+---
+
+### Validation
+
+- PDF validation
+- Maximum file size
+- Corrupted document detection
+- Empty upload detection
+
+---
+
+### Error Handling
+
+Continue using standardized API responses through centralized exception handling.
 
 ---
 
@@ -391,22 +486,24 @@ Use ApiErrorResponse.
 
 ---
 
-# 6. Next Milestone
-
-# Utility Module v2
+# 6. Utility Module v3
 
 Features
 
-- PDF → Image
 - Merge PDF
 - Split PDF
+- Compress Image
+- Resize Image
+- Rotate Image
+- Watermark PDF
 
 Concepts
 
-- Multiple outputs
-- ZIP streaming
-- PDF parsing
+- PDF manipulation
+- Image processing
+- Processing pipelines
 - Memory optimization
+- Reusable utility services
 
 ---
 
@@ -568,7 +665,16 @@ Memory Profiling
 
 Current
 
-Minimal testing.
+Basic manual testing completed.
+
+Future
+
+- Unit Tests
+- Integration Tests
+- Security Tests
+- File Processing Tests
+- Performance Tests
+- Exception Handling Tests
 
 Future
 
@@ -644,20 +750,25 @@ Business value now has higher priority.
 
 # 16. Recommended Execution Order
 
-Future development should follow this order.
+Completed
 
+```
 Authentication
 
 ↓
 
 Image → PDF
+```
 
-↓
+Current
 
+```
 PDF → Image
+```
 
-↓
+Upcoming
 
+```
 Merge PDF
 
 ↓
@@ -691,11 +802,11 @@ Performance
 ↓
 
 Production Hardening
+```
 
-Avoid skipping milestones.
+Each milestone builds upon the concepts introduced by the previous milestone.
 
-Each milestone introduces concepts required by the next.
-
+Avoid skipping milestones unless business requirements change significantly.
 ---
 
 # 17. Future Refactoring Opportunities
@@ -704,18 +815,35 @@ Current architecture intentionally favors simplicity.
 
 Possible future improvements:
 
-- Domain-oriented packages.
-- Storage abstraction.
-- Async job execution.
-- Background processing.
-- Search indexing.
-- File storage service.
+- Authenticated utility history
+- UtilityJob integration
+- Storage abstraction
+- Async utility execution
+- Background job processing
+- Object storage integration
+- Search indexing
+- Performance profiling
 
-These should only be introduced when justified.
+These improvements should only be introduced when they solve an actual business or scalability problem.
 
 ---
 
-# 18. Milestone Completion Policy
+# 18. Current Platform Progress
+
+The project has now completed its infrastructure foundation and delivered its first production-inspired business feature.
+
+Completed capabilities include:
+
+- Authentication and Authorization
+- Stateless JWT Security
+- User Management
+- Utility Module v1 – Image → PDF
+
+The project has now entered its feature expansion phase, where additional utility modules will continue building upon the established architecture.
+
+---
+
+# 19. Milestone Completion Policy
 
 A milestone is complete only when:
 
@@ -737,7 +865,7 @@ A milestone is complete only when:
 
 ---
 
-# 19. Living Document Policy
+# 20. Living Document Policy
 
 After every milestone:
 

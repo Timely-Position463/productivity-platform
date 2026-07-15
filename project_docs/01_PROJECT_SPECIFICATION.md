@@ -5,19 +5,17 @@
 ---
 
 ## Document Information
-
 | Field | Value |
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Project Specification |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Authentication Module (JWT v1) |
-| Current Milestone | Utility Module – Image → PDF |
+| Last Updated Milestone | Utility Module v1 (Image → PDF) |
+| Current Milestone | Utility Module v2 (PDF → Image) |
 | Architecture | Layered Modular Monolith |
 | Primary Language | Java 21 |
 | Framework | Spring Boot 3.5.x |
-
 ---
 
 # 1. Project Vision
@@ -294,17 +292,36 @@ Future
 - Email Verification
 
 ---
+# 7. Utility Module
 
-# 7. Utility Module Requirements
+## Utility Module v1 (Completed)
 
-(Current Milestone)
+### Image → PDF
 
-## Image → PDF
+The first utility module has been successfully implemented.
 
-Guest User
+Guest users can upload one or more supported images and receive a generated PDF without requiring authentication.
+
+### Supported Features
+
+- Upload multiple PNG and JPEG images.
+- Maximum of 10 images per request.
+- Maximum file size of 10 MB per image.
+- Automatic image validation.
+- Multi-page PDF generation.
+- Images scaled to fit A4 pages while preserving aspect ratio.
+- Generated PDF returned directly as a downloadable response.
+- No server-side file storage.
+- Standardized API error responses.
+
+### Guest User Workflow
 
 ```
 Upload Images
+
+↓
+
+Validate Images
 
 ↓
 
@@ -315,7 +332,7 @@ Generate PDF
 Download PDF
 ```
 
-Authenticated User
+### Authenticated User (Planned)
 
 ```
 Upload Images
@@ -326,16 +343,20 @@ Generate PDF
 
 ↓
 
-Store Utility Job
+Create UtilityJob
 
 ↓
 
-View History
+Store History
+
+↓
+
+View Previous Conversions
 ```
 
 ---
 
-Future utilities:
+## Upcoming Utility Modules
 
 - PDF → Image
 - Merge PDF
@@ -345,7 +366,6 @@ Future utilities:
 - Rotate Image
 - Watermark PDF
 - Extract Pages
-
 ---
 
 # 8. Knowledge Module
@@ -432,7 +452,11 @@ Possible statuses:
 - COMPLETED
 - FAILED
 
-Current implementation stores the foundation for this model.
+Current implementation includes the UtilityJob entity and foundational APIs.
+
+Image → PDF currently operates as a stateless utility for guest users.
+
+UtilityJob persistence will be integrated into utility workflows beginning with authenticated utility execution.
 
 ---
 
@@ -460,9 +484,11 @@ Future AI integrations should require minimal architectural changes.
 
 Avoid unnecessary database calls.
 
-Stream files when appropriate.
+Generate files entirely in memory for lightweight operations.
 
 Avoid excessive memory usage during file processing.
+
+Design utility modules to support streaming or asynchronous processing when future workloads justify the additional complexity.
 
 ---
 
@@ -522,31 +548,38 @@ Meaningful logging.
 
 ✔ Layered Architecture
 
-✔ DTOs
+✔ DTO Pattern
 
 ✔ Validation
 
-✔ Security
+✔ Spring Security
 
-✔ JWT
+✔ JWT Authentication
 
-✔ Authentication
-
-✔ Authorization
+✔ Role-based Authorization
 
 ✔ Global Exception Handling
+
+✔ Utility Module v1 – Image → PDF
 
 ---
 
 ## Current
 
-Image → PDF
+Utility Module v2
+
+- PDF → Image
 
 ---
 
-## Next
+## Planned Utility Features
 
-PDF → Image
+- Merge PDF
+- Split PDF
+- Compress Image
+- Resize Image
+- Rotate Image
+- Watermark PDF
 
 ---
 
@@ -554,15 +587,17 @@ PDF → Image
 
 OCR
 
+AI Integration
+
 ---
 
 ## Long-Term
 
 Knowledge Platform
 
-AI
+Semantic Search
 
-Search
+Document Management
 
 ---
 
@@ -573,7 +608,8 @@ The project is considered successful if it demonstrates:
 - Strong backend architecture
 - Clean REST API design
 - Proper authentication
-- Real-world file processing
+- Production-inspired file processing
+- Modular utility architecture
 - AI integration
 - Modular growth
 - Production-inspired engineering practices
@@ -589,7 +625,25 @@ The developer (Ajay) should finish the project understanding:
 
 ---
 
-# 15. Out of Scope (Current)
+# 15. Current Project Status
+
+## Completed
+
+- Authentication Module v1
+- Utility Module v1 – Image → PDF
+
+## Current Focus
+
+Utility Module v2
+
+- PDF → Image
+
+## Long-Term Vision
+
+Continue expanding the platform into a complete Productivity & Knowledge Platform by introducing additional utilities, OCR, AI-assisted document processing, and personal knowledge management capabilities while preserving the existing layered architecture.
+
+
+# 16. Out of Scope (Current)
 
 The following are intentionally postponed.
 
@@ -610,7 +664,7 @@ They may be introduced later if the project naturally grows to require them.
 
 ---
 
-# 16. Definition of Done
+# 17. Definition of Done
 
 A feature is considered complete only if it satisfies all of the following:
 

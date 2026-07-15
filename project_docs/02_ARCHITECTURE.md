@@ -10,11 +10,10 @@
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Architecture |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Authentication Module (JWT v1) |
-| Current Milestone | Utility Module – Image → PDF |
-
+| Last Updated Milestone | Utility Module v1 (Image → PDF) |
+| Current Milestone | Utility Module v2 (PDF → Image) |
 ---
 
 # 1. Architecture Overview
@@ -113,38 +112,33 @@ Remain Layered until business growth naturally requires evolution.
 # 3. Package Structure
 
 ```
-
 com.ajay.productivity
 
 ├── config
-
 ├── controller
-
 ├── dto
-
-│ ├── request
-
-│ └── response
-
 ├── entity
-
 ├── exception
-
 ├── repository
-
 ├── security
-
 ├── service
-
 ├── util
 
-└── ProductivityApplication
+├── utility
+│   ├── controller
+│   ├── imageToPdf
+│   │   ├── service
+│   │   └── exception
+│   └── util
 
+└── ProductivityApplication
 ```
 
-Package responsibilities are strict.
+The project now follows a modular layered structure.
 
-Classes should not violate these boundaries.
+Core platform concerns (authentication, persistence, security) remain separated from business utility modules.
+
+Each utility owns its own business logic while continuing to respect the global layered architecture.
 
 ---
 
@@ -186,14 +180,34 @@ Controllers remain intentionally thin.
 
 Purpose
 
-Business logic.
+Application business logic.
 
 Responsibilities:
 
 - Authentication
-- Utility processing
-- User operations
-- Job management
+- User management
+- UtilityJob management
+- Cross-module business coordination
+
+Feature-specific business logic should be implemented inside the corresponding utility module whenever possible.
+
+Example:
+
+```
+utility
+
+↓
+
+imageToPdf
+
+↓
+
+service
+
+↓
+
+ImageToPdfService
+```
 
 Services must never contain HTTP concerns.
 
@@ -276,15 +290,29 @@ Contains:
 
 Purpose
 
-Shared helper classes.
+Reusable helper components.
 
-Current:
+Current shared utilities:
 
-EntityToDTOConverter
+- EntityToDTOConverter
 
-Future:
+Feature-specific helpers belong inside their respective utility modules.
 
-Utility-specific helpers if justified.
+Example:
+
+```
+utility
+
+↓
+
+util
+
+↓
+
+ImagePlacement
+```
+
+This keeps unrelated utility implementations isolated from the application's shared components.
 
 ---
 
@@ -338,7 +366,55 @@ Nothing else.
 
 ---
 
-# 6. Entity Model
+# 6. Utility Module Architecture
+
+The Utility Module is designed as an independent business module within the layered architecture.
+
+Current implementation:
+
+```
+UtilityController
+
+↓
+
+ImageToPdfService
+
+↓
+
+Validation
+
+↓
+
+Image Decoding
+
+↓
+
+PDF Generation
+
+↓
+
+ByteArrayResource
+
+↓
+
+HTTP Response
+```
+
+Current characteristics:
+
+- Stateless processing
+- Synchronous execution
+- In-memory PDF generation
+- No temporary file storage
+- Guest-accessible endpoint
+
+This architecture intentionally favors simplicity.
+
+Future utility modules should follow the same structure unless business requirements justify a different design.
+
+---
+
+# 7. Entity Model
 
 ## User
 
@@ -406,7 +482,7 @@ Current requirements do not justify multiple simultaneous roles.
 
 ---
 
-# 7. DTO Architecture
+# 8. DTO Architecture
 
 Project rule:
 
@@ -436,7 +512,7 @@ Reasons
 
 ---
 
-# 8. Security Architecture
+# 9. Security Architecture
 
 Authentication architecture:
 
@@ -470,7 +546,7 @@ Responsibilities are intentionally separated.
 
 ---
 
-# 9. JWT Architecture
+# 10. JWT Architecture
 
 JwtService owns:
 
@@ -489,7 +565,7 @@ JwtService never:
 
 ---
 
-# 10. JwtFilter
+# 11. JwtFilter
 
 Purpose
 
@@ -547,7 +623,7 @@ Nothing else.
 
 ---
 
-# 11. Authentication Flow
+# 12. Authentication Flow
 
 ```
 
@@ -585,7 +661,7 @@ LoginResponse
 
 ---
 
-# 12. Authorization Flow
+# 13 Authorization Flow
 
 Protected Request
 
@@ -611,7 +687,7 @@ Authentication occurs before authorization.
 
 ---
 
-# 13. SecurityContext
+# 14. SecurityContext
 
 Purpose
 
@@ -639,13 +715,16 @@ ROLE_USER / ROLE_ADMIN
 
 ---
 
-# 14. Request Lifecycle
+# 15. Request Lifecycle
 
-## Public Endpoint
+## Public Utility Request
 
 ```
-
 Client
+
+↓
+
+Multipart Request
 
 ↓
 
@@ -657,28 +736,38 @@ PermitAll
 
 ↓
 
-Controller
+UtilityController
 
 ↓
 
-Service
+ImageToPdfService
 
 ↓
 
-Repository
+Validation
 
 ↓
 
-Response
+Image Decoding
 
+↓
+
+PDF Generation
+
+↓
+
+ByteArrayResource
+
+↓
+
+HTTP Response
 ```
 
 ---
 
-## Protected Endpoint
+## Protected Request
 
 ```
-
 Client
 
 ↓
@@ -688,10 +777,6 @@ Security Filter Chain
 ↓
 
 JwtFilter
-
-↓
-
-JwtService
 
 ↓
 
@@ -716,38 +801,46 @@ Repository
 ↓
 
 Response
-
 ```
+
+Current utility endpoints are intentionally public.
+
+Authenticated utility workflows will extend this lifecycle by creating UtilityJob records after successful processing.
 
 ---
 
-# 15. Error Handling Architecture
+# 16. Error Handling Architecture
 
-Global exceptions
+Application-wide exceptions are handled centrally.
+
+```
+Controller / Service
 
 ↓
 
-GlobalExceptionHandler
+Custom Exception
+
+↓
+
+Global Exception Handler
 
 ↓
 
 ApiErrorResponse
+```
 
-Current standardized fields
+The Image → PDF module introduces feature-specific exceptions while continuing to use the application's centralized error response format.
 
-- timestamp
-- status
-- error
-- message
-- path
+Current utility exceptions include:
 
-Future
+- ImageValidationException
+- PdfGenerationException
 
-Validation details may be unified into this structure.
+This allows each module to define business-specific exceptions without duplicating error response logic.
 
 ---
 
-# 16. Dependency Injection Rules
+# 17. Dependency Injection Rules
 
 Project standard
 
@@ -763,7 +856,7 @@ Reasons
 
 ---
 
-# 17. Configuration Strategy
+# 18. Configuration Strategy
 
 Configuration belongs only in:
 
@@ -783,7 +876,7 @@ instead of scattered @Value annotations whenever practical.
 
 ---
 
-# 18. Database Strategy
+# 19. Database Strategy
 
 Current
 
@@ -792,6 +885,11 @@ PostgreSQL
 Docker
 
 Spring Data JPA
+
+
+Image → PDF currently performs stateless processing and therefore does not persist generated files.
+
+Future authenticated utility execution will integrate UtilityJob persistence for tracking utility history.
 
 Future considerations
 
@@ -804,7 +902,7 @@ No premature optimization.
 
 ---
 
-# 19. Logging Strategy
+# 20. Logging Strategy
 
 Current
 
@@ -820,46 +918,58 @@ Errors should include exception context.
 
 ---
 
-# 20. Future Architectural Evolution
+# 21. Future Architectural Evolution
 
 Current
 
-Layered Architecture
+Layered Modular Monolith
 
 ↓
 
-Future
-
-Modular Layered
+Feature Modules
 
 ↓
 
-Domain-oriented packages
+Additional Utility Modules
 
 ↓
 
-Selective Clean Architecture
+OCR
 
-Only when justified.
+↓
+
+AI Services
+
+↓
+
+Knowledge Platform
+
+↓
+
+Selective Clean Architecture (only if justified)
+
+The project will continue evolving incrementally without introducing unnecessary abstractions.
 
 ---
 
-# 21. Architectural Constraints
+# 22. Architectural Constraints
 
-Future contributors (or future ChatGPT sessions) should preserve:
+Future contributors should preserve the following principles.
 
-- Controllers remain thin
-- Services own business logic
-- JWT remains centralized
-- Security stays independent
-- DTOs remain immutable
-- Entities never exposed
-- Avoid premature abstraction
-- Favor readability over cleverness
-
+- Controllers remain thin.
+- Business logic belongs in services.
+- Utility modules remain self-contained.
+- Shared utilities remain framework-independent whenever practical.
+- JWT remains centralized.
+- Security remains independent from business modules.
+- DTOs remain immutable.
+- Entities are never exposed directly.
+- Avoid premature abstraction.
+- Prefer readability over cleverness.
+- Introduce asynchronous processing only when synchronous execution becomes a limitation.
 ---
 
-# 22. Definition of Good Architecture
+# 23. Definition of Good Architecture
 
 Every new module should satisfy:
 
@@ -873,13 +983,17 @@ Every new module should satisfy:
 
 ✓ Consistent Error Handling
 
+✓ Feature-oriented modularity
+
 ✓ Reusable Services
 
 ✓ Testability
 
 ✓ Extensibility
 
-without introducing unnecessary complexity.
+✓ Simplicity before abstraction
+
+Every utility should integrate naturally into the existing layered architecture rather than introducing parallel architectural patterns.
 
 ---
 

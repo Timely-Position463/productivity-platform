@@ -10,10 +10,9 @@
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Architecture Decision Log |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated | Authentication Module (JWT v1) |
-
+| Last Updated | Utility Module v1 (Image → PDF) |
 ---
 
 # Purpose
@@ -780,47 +779,316 @@ Long-term engineering growth is more valuable than quickly completing features.
 
 ---
 
+# ADR-026
+
+## Decision
+
+Use Apache PDFBox for PDF generation.
+
+---
+
+### Context
+
+The first utility module requires converting uploaded images into PDF documents.
+
+The library should be:
+
+- Open source
+- Mature
+- Well documented
+- Production proven
+- Compatible with Spring Boot
+
+---
+
+### Alternatives Considered
+
+- Apache PDFBox
+- OpenPDF
+- iText
+
+---
+
+### Decision
+
+Apache PDFBox
+
+---
+
+### Reason
+
+PDFBox provides:
+
+- Apache 2.0 License
+- Active maintenance
+- Excellent image rendering support
+- Large community
+- Straightforward API
+- No licensing concerns for open-source projects
+
+---
+
+### Consequences
+
+Positive
+
+- Simple API
+- No commercial licensing restrictions
+- Good documentation
+
+Negative
+
+- Entire document is generated in memory.
+- Less feature-rich than commercial PDF libraries.
+
+---
+
+### Future Impact
+
+If document size or processing time becomes significant, the implementation may evolve toward streaming or temporary-file generation.
+
+---
+
+# ADR-027
+
+## Decision
+
+Generate PDFs entirely in memory.
+
+---
+
+### Context
+
+The current utility generates PDFs immediately and returns them to the client.
+
+Generated files do not need to be stored.
+
+---
+
+### Alternatives Considered
+
+- Temporary files
+- Persistent file storage
+- In-memory generation
+
+---
+
+### Decision
+
+In-memory generation using ByteArrayResource.
+
+---
+
+### Reason
+
+Current business requirements involve relatively small files.
+
+Generating the document in memory:
+
+- Simplifies implementation
+- Avoids filesystem cleanup
+- Reduces infrastructure requirements
+- Provides fast responses
+
+---
+
+### Consequences
+
+Positive
+
+- Stateless processing
+- No disk I/O
+- Simple deployment
+- Easy cleanup
+
+Negative
+
+Large PDFs increase memory usage.
+
+---
+
+### Future Impact
+
+Future utility modules may introduce streaming responses or external object storage if larger workloads require it.
+
+---
+
+# ADR-028
+
+## Decision
+
+Implement utility-specific exception handling.
+
+---
+
+### Context
+
+Utility modules introduce business rules that differ from authentication and persistence.
+
+Examples include:
+
+- Invalid image formats
+- Corrupted image files
+- PDF generation failures
+
+---
+
+### Alternatives Considered
+
+- Reuse generic exceptions only
+- Create module-specific exceptions
+
+---
+
+### Decision
+
+Create dedicated utility exceptions while continuing to use the application's centralized error response format.
+
+---
+
+### Reason
+
+Business-specific exceptions improve:
+
+- Readability
+- Maintainability
+- Error classification
+
+while preserving a consistent API response structure.
+
+---
+
+### Consequences
+
+Positive
+
+- Better separation of concerns
+- Easier debugging
+- Reusable error response model
+
+Negative
+
+Slight increase in the number of exception classes.
+
+---
+
+### Future Impact
+
+Each future utility module should define its own business exceptions without duplicating response-building logic.
+
+---
+
+# ADR-029
+
+## Decision
+
+Implement utility modules as self-contained feature packages.
+
+---
+
+### Context
+
+The project has begun growing beyond authentication.
+
+Utility features should remain independent while continuing to follow the application's layered architecture.
+
+---
+
+### Alternatives Considered
+
+- Place utility classes directly in shared service packages
+- Organize utilities into dedicated feature packages
+
+---
+
+### Decision
+
+Create a dedicated utility package for each feature.
+
+Example:
+
+```
+utility
+
+↓
+
+imageToPdf
+
+↓
+
+controller
+
+service
+
+exception
+```
+
+---
+
+### Reason
+
+Feature-oriented organization:
+
+- Improves maintainability
+- Reduces coupling
+- Simplifies future expansion
+- Makes module ownership clearer
+
+---
+
+### Consequences
+
+Positive
+
+- Better modularity
+- Easier navigation
+- Scales naturally as additional utilities are added
+
+Negative
+
+Slightly deeper package hierarchy.
+
+---
+
+### Future Impact
+
+Future utility modules (PDF → Image, Merge PDF, Split PDF, OCR) should follow the same package organization.
+
+---
+
 # Future ADRs
 
 Examples of future decisions:
 
-ADR-026
-
-Image → PDF Library Selection
-
-ADR-027
-
-File Storage Strategy
-
-ADR-028
-
-OCR Library
-
-ADR-029
-
-AI Provider Strategy
-
 ADR-030
 
-Search Architecture
+PDF → Image Library Selection
 
 ADR-031
 
-Background Job Processing
+File Storage Strategy
 
 ADR-032
 
-Caching Strategy
+OCR Library Selection
 
 ADR-033
 
-Async Processing
+AI Provider Strategy
 
 ADR-034
 
-Storage Abstraction
+Background Job Processing
 
 ADR-035
+
+Caching Strategy
+
+ADR-036
+
+Asynchronous Utility Processing
+
+ADR-037
 
 Testing Strategy
 
