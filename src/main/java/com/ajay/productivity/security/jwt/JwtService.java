@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class JwtService {
 
+    private static final Log log = LogFactory.getLog(JwtService.class);
     private final JwtProperties properties;
 
     public String generateToken(UserDetails userDetails){
@@ -70,8 +73,9 @@ public class JwtService {
 
     @PostConstruct
     public void verifySecret() {
-        System.out.println("JWT Secret = " + properties.getSecret());
-        System.out.println("Length = " + properties.getSecret().length());
+//        System.out.println("JWT Secret = " + properties.getSecret());
+//        System.out.println("Length = " + properties.getSecret().length());
+        log.info("JWT Configuration loaded.");
     }
 
 }

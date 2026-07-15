@@ -10,10 +10,10 @@
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Learning Log |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Authentication Module (JWT v1) |
-| Current Milestone | Utility Module – Image → PDF |
+| Last Updated Milestone | Utility Module v1 (Image → PDF) |
+| Current Milestone | Utility Module v2 (PDF → Image) |
 
 ---
 
@@ -53,13 +53,12 @@ Current strengths:
 
 Current growth areas:
 
-- File processing
-- Testing
-- Transactions
-- Performance
-- System Design
+- Automated Testing
+- Performance optimization
 - Asynchronous processing
-- Scalability
+- Advanced Spring Data JPA
+- Distributed System Design
+- Production deployment practices
 
 ---
 
@@ -113,6 +112,12 @@ Concepts
 ✓ Component Scanning
 
 ✓ Bean lifecycle (basic understanding)
+
+✓ Configuration Properties
+
+✓ Multipart File Upload
+
+✓ Resource-based file responses
 
 ---
 
@@ -220,7 +225,78 @@ Specifications
 
 ---
 
-# 5. Spring Security Knowledge
+# 5. File Processing Knowledge
+
+Status
+
+Good Understanding
+
+The first production-inspired utility module has been completed.
+
+Concepts mastered
+
+✓ Multipart requests
+
+✓ MultipartFile
+
+✓ Image validation
+
+✓ MIME type validation
+
+✓ File size validation
+
+✓ File count validation
+
+✓ BufferedImage
+
+✓ ImageIO
+
+✓ ByteArrayResource
+
+✓ Resource management using try-with-resources
+
+✓ In-memory document generation
+
+Current understanding
+
+The developer now understands the complete lifecycle of a file-processing request:
+
+Client
+
+↓
+
+Multipart Request
+
+↓
+
+Validation
+
+↓
+
+Image Decoding
+
+↓
+
+Business Processing
+
+↓
+
+Generated Resource
+
+↓
+
+HTTP Response
+
+Topics for future improvement
+
+- Streaming large files
+- Temporary file storage
+- Asynchronous processing
+- Memory optimization
+
+---
+
+# 6. Spring Security Knowledge
 
 Status
 
@@ -354,7 +430,7 @@ BCrypt automatically handles secure salting.
 
 ---
 
-# 6. JWT Knowledge
+# 7. JWT Knowledge
 
 Status
 
@@ -432,7 +508,7 @@ Chosen because JWT validation should happen exactly once.
 
 ---
 
-# 7. Spring Security Request Lifecycle
+# 8. Spring Security Request Lifecycle
 
 Status
 
@@ -478,7 +554,7 @@ This lifecycle should now be considered known.
 
 ---
 
-# 8. Exception Handling
+# 9. Exception Handling
 
 Status
 
@@ -486,23 +562,23 @@ Good Understanding
 
 Implemented
 
-GlobalExceptionHandler
+- GlobalExceptionHandler
+- ApiErrorResponse
+- JwtAuthenticationEntryPoint
+- UtilityExceptionHandler
+- Module-specific exceptions
 
-ApiErrorResponse
+Current understanding
 
-JwtAuthenticationEntryPoint
-
-ObjectMapper
+Different business modules may define their own exceptions while continuing to use a centralized error response structure.
 
 Future
 
-AccessDeniedHandler
-
-Validation response unification
-
+- Validation response unification
+- AccessDeniedHandler
 ---
 
-# 9. HTTP Knowledge
+# 10. HTTP Knowledge
 
 Status
 
@@ -526,7 +602,7 @@ This distinction was an important learning milestone.
 
 ---
 
-# 10. Engineering Principles Learned
+# 11. Engineering Principles Learned
 
 The following principles have repeatedly influenced implementation.
 
@@ -578,7 +654,7 @@ Controllers
 
 ↓
 
-Services
+Feature Services
 
 ↓
 
@@ -588,9 +664,13 @@ Repositories
 
 Security
 
+↓
+
+Utility Modules
+
 ---
 
-# 11. Architectural Thinking Progress
+# 12. Architectural Thinking Progress
 
 One of the biggest improvements during this project.
 
@@ -606,17 +686,17 @@ Current
 
 Questions are architecture-oriented.
 
-Example
+Examples
 
-"Which class should own this responsibility?"
+"Which class owns this responsibility?"
 
-This shift represents significant engineering growth.
+"Should this belong in the shared service layer or inside the utility module?"
 
-Future mentoring should continue encouraging architectural reasoning.
+"Does this implementation justify another abstraction?"
 
 ---
 
-# 12. Code Review Progress
+# 13. Code Review Progress
 
 Initially
 
@@ -628,19 +708,18 @@ Current
 
 Focus
 
-Responsibilities.
-
-Architecture.
-
-Trade-offs.
-
-Future implications.
+- Responsibilities
+- Architecture
+- Trade-offs
+- Package organization
+- Production readiness
+- Long-term maintainability
 
 This indicates increasing engineering maturity.
 
 ---
 
-# 13. Interview Readiness
+# 14. Interview Readiness
 
 The following interview topics are now considered covered.
 
@@ -682,89 +761,72 @@ Programming to Interfaces
 
 Future interview topics
 
-Transactions
+- PDF processing
+- File streaming
+- Transactions
+- Caching
+- Asynchronous processing
+- Performance optimization
+- System Design
+- Storage strategies
+---
 
-Caching
+# 15. Topics Intentionally Deferred
 
-File Upload
+The following topics have been intentionally postponed until the project naturally requires them.
 
-Streaming
+- Refresh Tokens
+- OAuth2
+- Email Verification
+- Automated Testing
+- Async Utility Processing
+- Object Storage
+- OCR
+- AI Integration
 
-Async Processing
-
-System Design
+These topics should continue to be introduced through future milestones rather than isolated tutorials.
 
 ---
 
-# 14. Topics Intentionally Deferred
-
-The following topics have been discussed but intentionally postponed.
-
-Refresh Tokens
-
-OAuth2
-
-Forgot Password
-
-Email Verification
-
-Testing
-
-Caching
-
-Async Processing
-
-OCR
-
-AI
-
-They should be introduced naturally when required by future milestones.
-
----
-
-# 15. Next Learning Objectives
+# 16. Next Learning Objectives
 
 Current milestone
 
-Image → PDF
+Utility Module v2 – PDF → Image
 
 Expected concepts
 
-MultipartFile
+PDF Parsing
 
 ↓
 
-Multipart Requests
+Page Rendering
 
 ↓
 
-Streaming Responses
+ZIP Generation
 
 ↓
 
-PDF Generation
+Multiple File Responses
 
 ↓
 
-File Validation
+Memory Optimization
 
 ↓
 
-Temporary File Handling
+Resource Cleanup
 
 ↓
 
-Resource Management
+Performance Considerations
 
-↓
-
-Persistence
-
-These topics should be learned through implementation rather than theory.
+These concepts should continue to be learned through real feature implementation rather than isolated examples.
 
 ---
 
-# 16. Mentoring Expectations
+# 17. Mentoring Expectations
 
 Future mentoring should continue following these principles.
 
@@ -794,27 +856,27 @@ Do Not
 
 ---
 
-# 17. Current Confidence Assessment
+# 18. Current Confidence Assessment
 
 | Area | Confidence |
 |--------|-----------|
 | Spring Boot | High |
 | REST APIs | High |
-| DTOs | High |
+| DTO Pattern | High |
 | Validation | High |
 | Spring Data JPA | Medium-High |
 | Spring Security | High |
 | JWT | High |
 | Layered Architecture | High |
+| File Processing | Medium-High |
 | Clean Code | Medium-High |
-| File Processing | Beginner |
+| Automated Testing | Beginner |
 | Async Processing | Beginner |
-| Testing | Beginner |
-| System Design | Intermediate (Learning) |
+| System Design | Intermediate |
 
 ---
 
-# 18. Long-Term Learning Goal
+# 19. Long-Term Learning Goal
 
 The objective is **not** simply to finish this project.
 
@@ -823,8 +885,9 @@ The objective is to become capable of independently designing, implementing, and
 By the end of the project, the developer should be comfortable with:
 
 - Backend architecture
+- Production-grade file processing
 - Secure API development
-- File processing
+- Utility platform design
 - AI integrations
 - Scalable system design
 - Production engineering practices

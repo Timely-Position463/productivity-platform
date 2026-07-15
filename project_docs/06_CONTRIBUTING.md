@@ -10,11 +10,10 @@
 |-------|-------|
 | Project | Productivity & Knowledge Platform |
 | Document | Development Guide |
-| Version | 2.0 |
+| Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Authentication Module (JWT v1) |
-| Current Milestone | Utility Module – Image → PDF |
-
+| Last Updated Milestone | Utility Module v1 (Image → PDF) |
+| Current Milestone | Utility Module v2 (PDF → Image) |
 ---
 
 # 1. Purpose
@@ -220,7 +219,23 @@ Services should:
 - Validate business constraints
 - Delegate specialized work
 
-Services should not know HTTP details.
+Feature-specific business logic should remain inside the corresponding feature module whenever possible.
+
+Example
+
+```
+utility
+
+↓
+
+imageToPdf
+
+↓
+
+ImageToPdfService
+```
+
+Services should never know HTTP details or directly construct HTTP responses.
 
 ---
 
@@ -250,29 +265,41 @@ instead of scattered @Value annotations whenever appropriate.
 
 # 5. Package Organization Rules
 
-Every new class must belong to an existing layer.
+The project follows a layered modular structure.
 
-Current layers:
+Shared packages:
 
-config
+- config
+- controller
+- service
+- repository
+- entity
+- dto
+- security
+- exception
+- util
+
+Business features should be implemented as independent modules whenever appropriate.
+
+Example
+
+```
+utility
+
+↓
+
+imageToPdf
+
+↓
 
 controller
 
 service
 
-repository
-
-entity
-
-dto
-
-security
-
 exception
+```
 
-util
-
-Avoid creating new packages unless a clear architectural need exists.
+New feature modules should integrate into the existing architecture instead of creating parallel structures.
 
 ---
 
@@ -301,6 +328,8 @@ Examples
 AuthService
 
 JwtService
+
+ImageToPdfService
 
 UtilityJobService
 
@@ -350,31 +379,33 @@ JobNotFoundException
 
 # 7. Error Handling Standards
 
-All exceptions should be centralized.
+All exceptions should be handled centrally.
 
 Controllers should never manually construct error responses.
 
-Use:
+Current approach
+
+```
+Business Logic
+
+↓
+
+Custom Exception
+
+↓
 
 GlobalExceptionHandler
 
 ↓
 
 ApiErrorResponse
-
-Current format
-
-```json
-{
-  "timestamp": "...",
-  "status": 404,
-  "error": "Not Found",
-  "message": "...",
-  "path": "/..."
-}
 ```
 
-Future validation errors should also follow this structure.
+Each feature module may define business-specific exceptions while continuing to use the centralized error response format.
+
+This keeps error handling consistent without sacrificing modularity.
+
+Future validation responses should also follow the same structure.
 
 ---
 
@@ -402,65 +433,67 @@ Never mix these responsibilities.
 
 # 9. Feature Development Workflow
 
-Every future feature should follow the same workflow.
+Every new feature should follow this workflow.
 
-## Step 1
+### Step 1
 
 Understand the business problem.
 
 ---
 
-## Step 2
+### Step 2
 
 Define functional requirements.
 
 ---
 
-## Step 3
+### Step 3
 
-Discuss architecture.
-
----
-
-## Step 4
-
-Design REST API.
+Identify architectural responsibilities.
 
 ---
 
-## Step 5
+### Step 4
 
-Design DTOs.
-
----
-
-## Step 6
-
-Discuss entities (if required).
+Design the API contract.
 
 ---
 
-## Step 7
+### Step 5
 
-Implement incrementally.
-
----
-
-## Step 8
-
-Review implementation.
+Design DTOs and validation.
 
 ---
 
-## Step 9
+### Step 6
 
-Refactor only if justified.
+Implement business logic incrementally.
 
 ---
 
-## Step 10
+### Step 7
+
+Review architecture and responsibilities.
+
+---
+
+### Step 8
+
+Refactor only when justified.
+
+---
+
+### Step 9
+
+Update tests.
+
+---
+
+### Step 10
 
 Update documentation.
+
+A milestone is not considered complete until both the implementation and its documentation are finished.
 
 ---
 
@@ -540,7 +573,9 @@ Continue learning incrementally.
 
 # 11. Documentation Policy
 
-Every completed milestone should update:
+# 11. Documentation Policy
+
+Every completed milestone must update:
 
 - PROJECT_SPECIFICATION.md
 - ARCHITECTURE.md
@@ -549,8 +584,12 @@ Every completed milestone should update:
 - LEARNING_LOG.md
 - DEVELOPMENT_GUIDE.md
 - HANDOFF.md
+- CHANGELOG.md
+- README.md (when user-facing functionality changes)
 
-Documentation is considered part of the implementation.
+Documentation should evolve together with the implementation.
+
+Outdated documentation is considered technical debt.
 
 ---
 
@@ -564,25 +603,29 @@ Layered Modular Monolith
 
 ↓
 
-Future
-
-Domain-oriented Modules
+Feature Modules
 
 ↓
 
-Selective Clean Architecture
+Utility Expansion
 
 ↓
 
-Async Processing
+OCR
 
 ↓
 
-Storage Abstraction
+AI Integration
 
 ↓
 
-Performance Optimization
+Knowledge Platform
+
+↓
+
+Selective Clean Architecture (only if justified)
+
+Architecture should evolve only when business complexity requires it.
 
 Avoid redesigning the project for theoretical reasons.
 
@@ -673,6 +716,10 @@ Every implementation should satisfy:
 
 ✓ Maintainability
 
+✓ Feature modularity
+
+✓ Production-ready documentation
+
 If an implementation works but violates these principles, it should be improved before being considered complete.
 
 ---
@@ -681,22 +728,42 @@ If an implementation works but violates these principles, it should be improved 
 
 The following topics should be introduced only when the project naturally requires them.
 
+- Automated Testing
 - Transactions
+- PDF Processing
+- ZIP Streaming
 - Async Processing
-- Scheduling
+- Background Jobs
 - File Storage Strategies
-- Testing
-- Caching
+- Object Storage
 - Performance Profiling
 - Search
 - Messaging
 - Distributed Systems
 
-Avoid teaching them prematurely.
+Avoid introducing complexity before it provides measurable value.
 
 ---
 
-# 17. Definition of Success
+# 17. Release Checklist
+
+Before publishing a new project milestone:
+
+- Verify code quality.
+- Remove debug logging.
+- Review API consistency.
+- Update all project documentation.
+- Update CHANGELOG.
+- Update README.
+- Tag the release.
+- Perform final manual testing.
+- Review architecture decisions.
+
+A release should represent a stable and well-documented milestone rather than simply the latest code.
+
+---
+
+# 18. Definition of Success
 
 This project is successful when:
 
