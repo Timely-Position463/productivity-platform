@@ -6,6 +6,21 @@ The format is inspired by **Keep a Changelog**, and the project follows **Semant
 
 ---
 
+## [v0.6.1] - CI/CD Foundation
+
+### Added
+- GitHub Actions CI workflow
+- Automated Maven test execution on every push and pull request
+- PostgreSQL service container for CI
+- Maven dependency caching
+- PostgreSQL health checks before test execution
+
+### Improved
+- Secure configuration using GitHub Repository Secrets
+- Automated backend validation for every code change
+
+---
+
 ## [v0.6.0] - Utility Module v1 (Image → PDF)
 
 ### Added
