@@ -1,4 +1,4 @@
-package com.ajay.productivity.utility.imageToPdf.exception;
+package com.ajay.productivity.utility.exception;
 
 public class PdfGenerationException extends RuntimeException{
     public PdfGenerationException(String message){

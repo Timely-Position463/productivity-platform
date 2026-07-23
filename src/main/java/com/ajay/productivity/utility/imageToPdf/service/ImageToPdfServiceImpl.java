@@ -1,7 +1,7 @@
 package com.ajay.productivity.utility.imageToPdf.service;
 
-import com.ajay.productivity.utility.imageToPdf.exception.ImageValidationException;
-import com.ajay.productivity.utility.imageToPdf.exception.PdfGenerationException;
+import com.ajay.productivity.utility.exception.ImageValidationException;
+import com.ajay.productivity.utility.exception.PdfGenerationException;
 import com.ajay.productivity.utility.util.ImagePlacement;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

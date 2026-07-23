@@ -12,7 +12,8 @@
 | Document | Architecture Decision Log |
 | Version | 3.0 |
 | Status | Living Document |
-| Last Updated | Utility Module v1 (Image → PDF) |
+| Last Updated | v0.6.1 – Platform Foundation |
+| Current Milestone | v0.7.0 – Document Processing Foundation|
 ---
 
 # Purpose
@@ -650,7 +651,7 @@ May include
 
 ## Decision
 
-Guests can access selected utilities.
+Guests can access selected document processing capabilities.
 
 ---
 
@@ -666,10 +667,10 @@ Users can evaluate platform before registering.
 
 Authenticated users receive additional functionality:
 
-- History
-- Saved files
+- Processing History
+- Saved Documents
 - Analytics
-
+- Personal Workspace
 ---
 
 # ADR-022
@@ -702,7 +703,7 @@ Additional claims only when required.
 
 ## Decision
 
-Authentication module considered complete before Utility Module.
+Authentication module considered complete before Document Processing.
 
 ---
 
@@ -710,7 +711,7 @@ Authentication module considered complete before Utility Module.
 
 Avoid spending excessive time perfecting authentication.
 
-Business value now takes priority.
+Document processing capabilities now take priority.
 
 ---
 
@@ -917,13 +918,13 @@ Future utility modules may introduce streaming responses or external object stor
 
 ## Decision
 
-Implement utility-specific exception handling.
+Implement processing-specific exception handling.
 
 ---
 
 ### Context
 
-Utility modules introduce business rules that differ from authentication and persistence.
+Document processing modules introduce business rules that differ from authentication and persistence.
 
 Examples include:
 
@@ -942,7 +943,7 @@ Examples include:
 
 ### Decision
 
-Create dedicated utility exceptions while continuing to use the application's centralized error response format.
+Create dedicated processing exceptions while continuing to use the application's centralized error response format.
 
 ---
 
@@ -974,7 +975,7 @@ Slight increase in the number of exception classes.
 
 ### Future Impact
 
-Each future utility module should define its own business exceptions without duplicating response-building logic.
+Each future document processing module should define its own business exceptions without duplicating response-building logic.
 
 ---
 
@@ -982,7 +983,7 @@ Each future utility module should define its own business exceptions without dup
 
 ## Decision
 
-Implement utility modules as self-contained feature packages.
+Implement document processing modules as self-contained feature packages.
 
 ---
 
@@ -990,7 +991,7 @@ Implement utility modules as self-contained feature packages.
 
 The project has begun growing beyond authentication.
 
-Utility features should remain independent while continuing to follow the application's layered architecture.
+Document processing features should remain independent while continuing to follow the application's layered architecture.
 
 ---
 
@@ -1042,17 +1043,157 @@ Positive
 
 - Better modularity
 - Easier navigation
-- Scales naturally as additional utilities are added
+- Scales naturally as additional document processing capabilities are added.
 
 Negative
 
 Slightly deeper package hierarchy.
 
+Future document processing capabilities (PDF → Image, Merge PDF, Split PDF, OCR) should follow the same organizational approach.
+
+
 ---
 
-### Future Impact
+# ADR-030: Adopt Apache PDFBox for PDF Rendering
 
-Future utility modules (PDF → Image, Merge PDF, Split PDF, OCR) should follow the same package organization.
+### Status
+
+Accepted
+
+### Context
+
+The platform required support for converting PDF documents into images while maintaining high rendering quality and supporting future document-processing capabilities.
+
+### Decision
+
+Apache PDFBox was selected as the rendering library.
+
+### Rationale
+
+- Mature open-source library
+- Actively maintained
+- Native PDF rendering support
+- Excellent Spring Boot compatibility
+- Supports future document-processing features
+
+### Consequences
+
+Positive
+
+- Reliable rendering
+- Extensible foundation
+- Minimal external dependencies
+
+Negative
+
+- Rendering large PDFs increases memory usage
+- Performance optimizations may be required in future versions
+
+---
+
+# ADR-031: Return Rendered Pages as ZIP Archive
+
+### Status
+
+Accepted
+
+### Context
+
+PDF to Image conversion may generate multiple image files.
+
+Returning multiple HTTP responses is not practical.
+
+### Decision
+
+Package all rendered images into a single ZIP archive before returning the response.
+
+### Rationale
+
+- Single download
+- Better user experience
+- Standard browser support
+- Simplifies API design
+
+### Consequences
+
+Positive
+
+- Easy client handling
+- Reduced network overhead
+- Cleaner API
+
+Negative
+
+- Temporary memory overhead while creating the archive
+
+---
+
+# ADR-032: Validate PDFs Before Rendering
+
+### Status
+
+Accepted
+
+### Context
+
+Corrupted or invalid PDF files should be rejected before rendering begins.
+
+### Decision
+
+Validate uploaded PDFs using PDFBox before processing.
+
+### Rationale
+
+- Fail fast
+- Better error messages
+- Avoid unnecessary rendering work
+- Improve API reliability
+
+### Consequences
+
+Positive
+
+- Better user experience
+- Improved stability
+- Consistent validation flow
+
+---
+
+# ADR-033: Evolve from Utility-Centric Features to Document Processing
+
+### Status
+
+Accepted
+
+### Context
+
+The project originally organized file operations as independent utilities.
+
+As additional capabilities were introduced, this structure no longer represented the long-term direction of the platform.
+
+### Decision
+
+Treat document processing as a core business domain.
+
+Individual operations such as Image → PDF, PDF → Image, Merge PDF and Split PDF are considered capabilities within this domain.
+
+### Rationale
+
+- Better scalability
+- Consistent terminology
+- Easier future expansion
+- Supports OCR, AI and document management
+
+### Consequences
+
+Positive
+
+- Clear architectural direction
+- Better documentation consistency
+- Simplifies future feature organization
+
+---
+### Future Impact
 
 ---
 
@@ -1086,7 +1227,7 @@ Caching Strategy
 
 ADR-036
 
-Asynchronous Utility Processing
+Asynchronous Document Processing
 
 ADR-037
 

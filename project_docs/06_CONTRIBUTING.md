@@ -12,8 +12,8 @@
 | Document | Development Guide |
 | Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Utility Module v1 (Image → PDF) |
-| Current Milestone | Utility Module v2 (PDF → Image) |
+| Last Updated Milestone | v0.6.1 – Platform Foundation |
+| Current Milestone | v0.7.0 – Document Processing Foundation |
 ---
 
 # 1. Purpose
@@ -122,7 +122,13 @@ Learning
 
 Example
 
-Image → PDF naturally introduces MultipartFile, streaming, and file validation.
+Document processing features should introduce new backend concepts naturally through real business requirements rather than isolated tutorials.
+
+Example:
+
+Image → PDF introduced MultipartFile, validation, and PDF generation.
+
+PDF → Image will introduce PDF parsing, rendering, ZIP archive creation, and multi-file responses.
 
 ---
 
@@ -279,8 +285,11 @@ Shared packages:
 - exception
 - util
 
-Business features should be implemented as independent modules whenever appropriate.
+Business features should be implemented as independent feature modules whenever appropriate.
 
+Current implementation uses the utility package as the document processing feature area.
+
+Future document processing capabilities should continue extending this structure until a dedicated processing module becomes justified.
 Example
 
 ```
@@ -491,9 +500,11 @@ Update tests.
 
 ### Step 10
 
-Update documentation.
+Step 10
 
-A milestone is not considered complete until both the implementation and its documentation are finished.
+Update documentation, CHANGELOG, and release notes (when applicable).
+
+A milestone is complete only when implementation and documentation remain synchronized.
 
 ---
 
@@ -575,15 +586,15 @@ Continue learning incrementally.
 
 # 11. Documentation Policy
 
-Every completed milestone must update:
+Every completed milestone should review and update, where applicable:
 
-- PROJECT_SPECIFICATION.md
-- ARCHITECTURE.md
-- DECISION_LOG.md
-- ROADMAP.md
-- LEARNING_LOG.md
-- DEVELOPMENT_GUIDE.md
-- HANDOFF.md
+- 01_PROJECT_SPECIFICATION.md
+- 02_ARCHITECTURE.md
+- 03_DECISION_LOG.md
+- 04_ROADMAP.md
+- 05_ENGINEERING_PLAYBOOK.md
+- 06_CONTRIBUTING.md
+- 07_HANDOFF.md
 - CHANGELOG.md
 - README.md (when user-facing functionality changes)
 
@@ -607,7 +618,7 @@ Feature Modules
 
 ↓
 
-Utility Expansion
+Document Processing Expansion
 
 ↓
 
@@ -716,7 +727,7 @@ Every implementation should satisfy:
 
 ✓ Maintainability
 
-✓ Feature modularity
+✓ Feature modularity and reusable document processing design
 
 ✓ Production-ready documentation
 
@@ -730,8 +741,8 @@ The following topics should be introduced only when the project naturally requir
 
 - Automated Testing
 - Transactions
-- PDF Processing
-- ZIP Streaming
+- Document Processing Pipelines
+- Resource Management
 - Async Processing
 - Background Jobs
 - File Storage Strategies
@@ -757,7 +768,9 @@ Before publishing a new project milestone:
 - Update README.
 - Tag the release.
 - Perform final manual testing.
-- Review architecture decisions.
+- Verify documentation reflects the implemented code.
+- Confirm release notes are prepared.
+- Tag the release after the final commit is pushed.
 
 A release should represent a stable and well-documented milestone rather than simply the latest code.
 
@@ -767,7 +780,11 @@ A release should represent a stable and well-documented milestone rather than si
 
 This project is successful when:
 
-- The application is production-inspired.
+- The platform evolves through production-inspired features.
+- The architecture remains maintainable.
+- Every document processing capability introduces meaningful backend engineering concepts.
+- Documentation stays synchronized with implementation.
+- The developer learns to reason independently about architecture, trade-offs, and production-quality software.
 - The architecture remains maintainable.
 - Every feature teaches a new engineering concept.
 - Documentation stays synchronized with implementation.

@@ -6,14 +6,14 @@
 
 # Document Information
 
-| Field | Value |
-|-------|-------|
-| Project | Productivity & Knowledge Platform |
-| Document | Development Roadmap |
-| Version | 3.0 |
-| Status | Living Document |
-| Last Updated Milestone | Utility Module v1 (Image → PDF) |
-| Current Milestone | Utility Module v2 (PDF → Image) |
+| Field | Value                                   |
+|-------|-----------------------------------------|
+| Project | Productivity & Knowledge Platform       |
+| Document | Development Roadmap                     |
+| Version | 3.0                                     |
+| Status | Living Document                         |
+| Last Updated Milestone | v0.7.0 – Document Processing Foundation |
+| Current Milestone | v0.8.x – Document Processing Expansion  |
 ---
 
 # 1. Purpose
@@ -94,7 +94,7 @@ Authentication
 
 Spring Security
 
-Utility Module
+Document Processing
 
 ↓
 
@@ -104,7 +104,7 @@ OCR
 
 ↓
 
-Image Processing
+Computer Vision
 
 AI
 
@@ -116,26 +116,22 @@ Knowledge Platform
 
 ↓
 
-Search & Information Retrieval
+Search & Knowledge Management
 
 ---
 
 # 3. Milestone Overview
 
-| Milestone | Status | Priority |
-|-----------|--------|----------|
-| Environment Setup | ✅ Completed | High |
-| Project Foundation | ✅ Completed | High |
-| Authentication & Security | ✅ Completed | High |
-| Utility Module v1 (Image → PDF) | ✅ Completed | High |
-| Utility Module v2 (PDF → Image) | 🚧 Current | High |
-| Utility Module v3 | Planned | Medium |
-| OCR Module | Planned | Medium |
-| AI Module | Planned | Medium |
-| Knowledge Module | Planned | Medium |
-| Admin Dashboard | Planned | Low |
-| Performance & Optimization | Planned | Low |
-| Production Hardening | Planned | Low |
+| Release   | Status  | Focus               |
+| --------- |---------| ------------------- |
+| v0.1–v0.5 | ✅       | Platform Foundation |
+| v0.6.x    | ✅       | Image → PDF         |
+| v0.7.0    | ✅       | PDF → Image         |
+| v0.8.x    | 🚧      | PDF Processing      |
+| v0.9.x    | Planned | Image Processing    |
+| v1.0.0    | Planned | Document Platform   |
+| v1.1+     | Planned | OCR & AI            |
+| v2.0      | Planned | Knowledge Platform  |
 
 ---
 
@@ -262,269 +258,33 @@ Concepts Learned
 - ByteArrayResource
 - Feature-oriented modular architecture
 
+---
+## Milestone 4
+
+### v0.7.0 – Document Processing Foundation (PDF → Image)
+
+#### Status
+
+Current
 
 ---
 
-## Objective
+## v0.8.x – PDF Processing
 
-Expand the utility platform by introducing PDF → Image conversion.
+* Merge PDF
+* Split PDF
+* Extract Pages
+* Watermark
 
-This milestone introduces the first utility capable of producing multiple output files from a single input document.
+## v0.9.x – Image Processing
 
----
-
-## Business Requirement
-
-Guest users should be able to:
-
-- Upload a PDF document.
-- Select an output image format.
-- Download all generated pages.
-
-Authenticated users will additionally receive:
-
-- Utility history
-- Job tracking
-- Future download management
+* Compress
+* Resize
+* Rotate
 
 ---
 
-## Learning Objectives
-
-This milestone introduces:
-
-- PDF parsing
-- Rendering PDF pages
-- ZIP generation
-- Multiple file responses
-- Memory optimization
-- Temporary resource management
-- Utility pipeline evolution
-
----
-
-## Expected Deliverables
-
-### PDF Upload
-
-Support:
-
-- PDF documents
-
----
-
-### Image Generation
-
-Generate one image for each PDF page.
-
-Initially:
-
-PNG output.
-
-Future:
-
-JPEG and WEBP.
-
----
-
-### Response
-
-Return generated images as a ZIP archive.
-
----
-
-### Validation
-
-- PDF validation
-- Maximum file size
-- Corrupted document detection
-- Empty upload detection
-
----
-
-### Error Handling
-
-Continue using standardized API responses through centralized exception handling.
-
----
-
-## Business Requirement
-
-Guest users should be able to:
-
-- Upload one or more images.
-- Receive a generated PDF.
-
-Authenticated users should additionally receive:
-
-- Job history.
-- Ownership.
-- Future download history.
-
----
-
-## Learning Objectives
-
-This milestone introduces:
-
-- Multipart Requests
-- MultipartFile
-- File Upload Lifecycle
-- File Validation
-- Temporary File Handling
-- PDF Generation
-- Streaming Responses
-- Resource Management
-- File Cleanup
-- UtilityJob Persistence
-
----
-
-## Expected Deliverables
-
-### API Design
-
-Design endpoints.
-
-Discuss REST conventions.
-
----
-
-### File Upload
-
-Support:
-
-PNG
-
-JPEG
-
-WEBP (optional)
-
-Future:
-
-HEIC
-
-BMP
-
----
-
-### PDF Generation
-
-Convert uploaded images into a PDF.
-
-Initially:
-
-Synchronous generation.
-
-Future:
-
-Async processing.
-
----
-
-### Streaming
-
-Return PDF as:
-
-application/pdf
-
-instead of storing files unnecessarily.
-
----
-
-### Persistence
-
-Authenticated users:
-
-Create UtilityJob.
-
-Guest users:
-
-No persistence.
-
----
-
-### Validation
-
-Supported image types.
-
-Maximum file count.
-
-Maximum file size.
-
-Empty uploads.
-
-Invalid images.
-
----
-
-### Error Handling
-
-Consistent API responses.
-
-Use ApiErrorResponse.
-
----
-
-## Success Criteria
-
-✓ Multiple images accepted
-
-✓ PDF generated
-
-✓ Download works
-
-✓ Guest access supported
-
-✓ Authenticated ownership supported
-
-✓ Job persisted
-
-✓ Exception handling complete
-
-✓ API documented
-
----
-
-# 6. Utility Module v3
-
-Features
-
-- Merge PDF
-- Split PDF
-- Compress Image
-- Resize Image
-- Rotate Image
-- Watermark PDF
-
-Concepts
-
-- PDF manipulation
-- Image processing
-- Processing pipelines
-- Memory optimization
-- Reusable utility services
-
----
-
-# 7. Utility Module v3
-
-Features
-
-- Compress Image
-- Resize Image
-- Rotate Image
-- Watermark PDF
-
-Concepts
-
-- Image manipulation
-- Processing pipelines
-- Performance
-
----
-
-# 8. OCR Module
+# 8. Document Intelligence
 
 Status
 
@@ -547,7 +307,7 @@ Expected Concepts
 
 ---
 
-# 9. AI Module
+# 9. AI & Intelligence
 
 Status
 
@@ -781,19 +541,19 @@ Image Compression
 
 ↓
 
+Image Resizing
+
+↓
+
 OCR
 
 ↓
 
-AI Summary
+AI
 
 ↓
 
 Knowledge Platform
-
-↓
-
-Search
 
 ↓
 
@@ -807,6 +567,7 @@ Production Hardening
 Each milestone builds upon the concepts introduced by the previous milestone.
 
 Avoid skipping milestones unless business requirements change significantly.
+
 ---
 
 # 17. Future Refactoring Opportunities
@@ -815,10 +576,10 @@ Current architecture intentionally favors simplicity.
 
 Possible future improvements:
 
-- Authenticated utility history
+- Authenticated processing history
 - UtilityJob integration
 - Storage abstraction
-- Async utility execution
+- Async processing execution
 - Background job processing
 - Object storage integration
 - Search indexing
@@ -837,10 +598,81 @@ Completed capabilities include:
 - Authentication and Authorization
 - Stateless JWT Security
 - User Management
-- Utility Module v1 – Image → PDF
 
-The project has now entered its feature expansion phase, where additional utility modules will continue building upon the established architecture.
+## Completed
 
+### v0.5.x – Platform Foundation
+
+- Spring Boot
+- PostgreSQL
+- Docker
+- JWT Authentication
+- Role-based Authorization
+
+---
+
+### v0.6.x – Image → PDF
+
+- Image validation
+- Multi-image upload
+- PDF generation
+- Standardized exception handling
+
+---
+
+### v0.7.0 – PDF → Image
+
+- PDF validation
+- Corrupted PDF detection
+- PDF rendering
+- ZIP packaging
+- In-memory processing
+
+### Current
+
+PDF → Image
+
+---
+
+## Current Development
+
+### v0.8.x – Document Processing Expansion
+
+Planned capabilities
+
+- Merge PDF
+- Split PDF
+- Extract Pages
+
+---
+## Future Milestones
+
+### v0.9.x
+
+Document Editing
+
+- Resize Image
+- Rotate Image
+- Watermark PDF
+
+---
+
+### v1.0.0
+
+Document Processing Platform
+
+- Stable processing APIs
+- Processing history
+- Reusable processing foundation
+
+---
+
+### Future
+
+- OCR
+- AI Integration
+- Knowledge Platform
+- Semantic Search
 ---
 
 # 19. Milestone Completion Policy
@@ -871,13 +703,14 @@ After every milestone:
 
 Update
 
-- PROJECT_SPECIFICATION.md
-- ARCHITECTURE.md
-- DECISION_LOG.md
-- ROADMAP.md
-- LEARNING_LOG.md
-- DEVELOPMENT_GUIDE.md
-- HANDOFF.md
+- 01_PROJECT_SPECIFICATION.md
+- 02_ARCHITECTURE.md
+- 03_DECISION_LOG.md
+- 04_ROADMAP.md
+- 05_ENGINEERING_PLAYBOOK.md
+- 06_CONTRIBUTING.md
+- 07_HANDOFF.md
+- CHANGELOG.md
 
 No new handoff should be created unless the architecture changes significantly.
 

@@ -12,8 +12,8 @@
 | Document | Architecture |
 | Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Utility Module v1 (Image → PDF) |
-| Current Milestone | Utility Module v2 (PDF → Image) |
+| Last Updated Milestone |  v0.7.0 – Document Processing Foundation |
+| Current Milestone |  v0.8.x – Document Processing Expansion |
 ---
 
 # 1. Architecture Overview
@@ -124,12 +124,15 @@ com.ajay.productivity
 ├── service
 ├── util
 
-├── utility
+├── processing
 │   ├── controller
-│   ├── imageToPdf
-│   │   ├── service
-│   │   └── exception
-│   └── util
+│   ├── pdf
+│   │   ├── imageToPdf
+│   │   ├── pdfToImage
+│   │   ├── merge
+│   │   └── split
+│   ├── image
+│   └── common
 
 └── ProductivityApplication
 ```
@@ -138,7 +141,7 @@ The project now follows a modular layered structure.
 
 Core platform concerns (authentication, persistence, security) remain separated from business utility modules.
 
-Each utility owns its own business logic while continuing to respect the global layered architecture.
+Each document-processing capability owns its own business logic while continuing to respect the global layered architecture.
 
 ---
 
@@ -186,27 +189,23 @@ Responsibilities:
 
 - Authentication
 - User management
-- UtilityJob management
+- Document processing job management
 - Cross-module business coordination
 
-Feature-specific business logic should be implemented inside the corresponding utility module whenever possible.
+Feature-specific business logic should be implemented inside the corresponding processing module whenever possible.
 
 Example:
 
 ```
-utility
+processing
+
+↓
+
+pdf
 
 ↓
 
 imageToPdf
-
-↓
-
-service
-
-↓
-
-ImageToPdfService
 ```
 
 Services must never contain HTTP concerns.
@@ -296,7 +295,7 @@ Current shared utilities:
 
 - EntityToDTOConverter
 
-Feature-specific helpers belong inside their respective utility modules.
+Feature-specific helpers belong inside their respective document-processing modules.
 
 Example:
 
@@ -366,18 +365,18 @@ Nothing else.
 
 ---
 
-# 6. Utility Module Architecture
+# 6. Document Processing Architecture
 
-The Utility Module is designed as an independent business module within the layered architecture.
+The Document Processing domain is designed as an independent business domain within the layered architecture.
 
 Current implementation:
 
 ```
-UtilityController
+ProcessingController
 
 ↓
 
-ImageToPdfService
+Processing Service
 
 ↓
 
@@ -385,15 +384,11 @@ Validation
 
 ↓
 
-Image Decoding
+Processing Engine
 
 ↓
 
-PDF Generation
-
-↓
-
-ByteArrayResource
+Generated Output
 
 ↓
 
@@ -404,9 +399,12 @@ Current characteristics:
 
 - Stateless processing
 - Synchronous execution
-- In-memory PDF generation
-- No temporary file storage
-- Guest-accessible endpoint
+- In-memory document processing
+- Image → PDF generation
+- PDF → Image rendering
+- ZIP packaging for multi-file responses
+- No persistent file storage
+- Guest-accessible endpoints
 
 This architecture intentionally favors simplicity.
 
@@ -456,7 +454,7 @@ Current
 - timestamps
 - user
 
-Prepared for future utility modules.
+Prepared for future document processing operations.
 
 ---
 
@@ -717,9 +715,11 @@ ROLE_USER / ROLE_ADMIN
 
 # 15. Request Lifecycle
 
-## Public Utility Request
+## Public Document Processing Request
 
 ```
+Example: PDF → Image Request
+
 Client
 
 ↓
@@ -736,27 +736,23 @@ PermitAll
 
 ↓
 
-UtilityController
+ProcessingController
 
 ↓
 
-ImageToPdfService
+PdfToImageService
 
 ↓
 
-Validation
+PDF Validation
 
 ↓
 
-Image Decoding
+PDF Rendering
 
 ↓
 
-PDF Generation
-
-↓
-
-ByteArrayResource
+ZIP Packaging
 
 ↓
 
@@ -805,7 +801,7 @@ Response
 
 Current utility endpoints are intentionally public.
 
-Authenticated utility workflows will extend this lifecycle by creating UtilityJob records after successful processing.
+Authenticated document processing workflows will extend this lifecycle by creating UtilityJob records after successful processing.
 
 ---
 
@@ -829,10 +825,11 @@ Global Exception Handler
 ApiErrorResponse
 ```
 
-The Image → PDF module introduces feature-specific exceptions while continuing to use the application's centralized error response format.
-
+Document processing modules define feature-specific exceptions while reusing the application's centralized error response architecture.
 Current utility exceptions include:
 
+- ImageValidationException
+- PdfGenerationException
 - ImageValidationException
 - PdfGenerationException
 
@@ -887,7 +884,9 @@ Docker
 Spring Data JPA
 
 
-Image → PDF currently performs stateless processing and therefore does not persist generated files.
+Current document-processing capabilities (Image → PDF and PDF → Image) perform stateless, in-memory processing and therefore do not persist generated files.
+
+Future authenticated processing workflows will integrate UtilityJob persistence for tracking processing history.
 
 Future authenticated utility execution will integrate UtilityJob persistence for tracking utility history.
 
@@ -930,7 +929,11 @@ Feature Modules
 
 ↓
 
-Additional Utility Modules
+Document Processing
+
+↓
+
+Document Editing
 
 ↓
 
@@ -958,7 +961,7 @@ Future contributors should preserve the following principles.
 
 - Controllers remain thin.
 - Business logic belongs in services.
-- Utility modules remain self-contained.
+- Document processing capabilities remain self-contained.
 - Shared utilities remain framework-independent whenever practical.
 - JWT remains centralized.
 - Security remains independent from business modules.
@@ -993,7 +996,7 @@ Every new module should satisfy:
 
 ✓ Simplicity before abstraction
 
-Every utility should integrate naturally into the existing layered architecture rather than introducing parallel architectural patterns.
+Every document processing capability should integrate naturally into the existing layered architecture without introducing parallel architectural patterns.
 
 ---
 

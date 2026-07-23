@@ -6,6 +6,50 @@ The format is inspired by **Keep a Changelog**, and the project follows **Semant
 
 ---
 
+## [v0.7.0] - PDF to Image Utility
+
+### Added
+
+#### Utility Module
+- Implemented PDF → Image conversion utility.
+- Support for converting every page of a PDF into images.
+- ZIP archive generation for converted images.
+- Configurable image output format.
+- PDF validation before processing.
+- Temporary workspace management for generated images.
+- Automatic cleanup of temporary resources after processing.
+
+#### Architecture
+- Introduced reusable PDF validation utility.
+- Added PDF rendering service using Apache PDFBox.
+- Added ZIP generation utility for multi-file responses.
+- Extended utility module with PDF processing capabilities.
+
+#### API
+- Public PDF → Image endpoint.
+- Standardized ZIP download response.
+- Improved validation for uploaded PDF files.
+
+#### Documentation
+- Updated project specification.
+- Updated architecture documentation.
+- Updated roadmap.
+- Updated development guide.
+- Updated handoff documentation.
+- Updated README.
+- Updated CHANGELOG.
+
+### Changed
+
+- Expanded document-processing capabilities from image generation to PDF rendering.
+- Improved utility module extensibility for future document conversion features.
+
+### Fixed
+
+- Proper detection of corrupted or unreadable PDF files.
+- Improved resource cleanup during PDF rendering.
+- Prevented processing of invalid PDF uploads.
+
 ## [v0.6.1] - CI/CD Foundation
 
 ### Added
@@ -108,14 +152,20 @@ The format is inspired by **Keep a Changelog**, and the project follows **Semant
 
 ---
 
-## Upcoming
+## Planned
 
-### v0.7.0
+### v0.8.0
+- Merge PDF
+- Split PDF
 
-- PDF → Image
-- ZIP response generation
-- PDF page rendering
-- Memory optimization for multi-page processing
+### Later
+- Compress Image
+- Resize Image
+- Rotate Image
+- Watermark PDF
+- OCR Module
+- AI Integration
+- Knowledge Platform
 
 ### Future
 

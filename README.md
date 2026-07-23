@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="assets/banner.png" alt="Productivity Platform Banner"/>
+    <img src="assets/v0.7.0_Banner.png" alt="Productivity Platform Banner"/>
 </p>
 
 <div align="center">
@@ -21,7 +21,7 @@
 ![JWT](https://img.shields.io/badge/JWT-Authentication-000000?style=flat-square)
 ![Apache PDFBox](https://img.shields.io/badge/Apache-PDFBox-D22128?style=flat-square)
 ![Architecture](https://img.shields.io/badge/Architecture-Layered%20Modular-blue?style=flat-square)
-![Version](https://img.shields.io/badge/Version-v0.6.0-success?style=flat-square)
+![Version](https://img.shields.io/badge/Version-v0.7.0-success?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
@@ -37,23 +37,23 @@
 ---
 
 > [!NOTE]
-> **Current Release:** **v0.6.0 – Utility Module v1 (Image → PDF)**
+> **Current Release:** **v0.7.0 — Document Processing Foundation**
 > **Current Focus:** Building the **PDF → Image** utility while continuing to evolve the platform through production-inspired engineering practices.
 
 ---
 
 ## ⚡ Highlights
 
-| 🚀 Feature | Description |
-|------------|-------------|
-| **Architecture** | Layered Modular Monolith designed for long-term scalability |
-| **Security** | Stateless JWT Authentication with Spring Security |
-| **Utility Module** | Image → PDF conversion powered by Apache PDFBox |
-| **Database** | PostgreSQL with Spring Data JPA |
-| **Development** | Docker-based local development environment |
+| 🚀 Feature | Description                                                   |
+|------------|---------------------------------------------------------------|
+| **Architecture** | Layered Modular Monolith designed for long-term scalability   |
+| **Security** | Stateless JWT Authentication with Spring Security             |
+| **Document Processing** | Image → PDF and PDF → Image powered by Apache PDFBox          |
+| **Database** | PostgreSQL with Spring Data JPA                               |
+| **Development** | Docker-based local development environment                    |
 | **Documentation** | Comprehensive engineering documentation with ADRs and roadmap |
-| **Current Release** | **v0.6.0 – Utility Module v1 (Image → PDF)** |
-| **Next Milestone** | PDF → Image Conversion |
+| **Current Release** | **v0.7.0 — Document Processing Foundation**                   |
+| **Next Milestone** | PDF Utilities                                                 |
 
 ---
 
@@ -111,7 +111,7 @@ This project embraces that philosophy by building a **modular backend platform**
 
 Instead of implementing disconnected examples, every feature becomes part of a long-term system designed with scalability, maintainability, and clean architecture in mind.
 
-The journey begins with secure authentication and document-processing utilities, then gradually expands toward OCR, AI-assisted workflows, semantic search, and personal knowledge management.
+The journey begins with secure authentication and a reusable Document Processing foundation. As the platform evolves, new capabilities such as PDF utilities, image processing, OCR, AI-assisted workflows, semantic search, and personal knowledge management will build upon this shared architecture rather than existing as isolated features.
 
 The goal is not only to build software, but also to document the engineering decisions, trade-offs, and architectural evolution behind every milestone.
 
@@ -147,7 +147,7 @@ The long-term goal is to evolve this repository into a complete **Productivity &
 
 ```mermaid
 flowchart TD
-    A[🔐 Authentication & Security] --> B[📄 Document Utilities]
+    A[🔐 Authentication & Security] --> B[📄 Document Processing]
     B --> C[👁 OCR]
     C --> D[🤖 AI Services]
     D --> E[🧠 Knowledge Management]
@@ -174,9 +174,9 @@ The focus is not on adding features quickly, but on introducing the **right leve
 The platform currently consists of two major areas:
 
 - 🔐 Authentication & Security
-- 📄 Document Utilities
+- 📄 Document Processing
 
-Additional modules will be introduced incrementally as the platform evolves.
+The Document Processing domain provides modular, reusable capabilities for converting and processing documents. New processing features are added incrementally while sharing a common architectural foundation.
 
 ## 🔐 Authentication & Security
 
@@ -194,7 +194,9 @@ Additional modules will be introduced incrementally as the platform evolves.
 
 ---
 
-## 📄 Utility Module v1 — Image → PDF
+## 📄 Document Processing
+
+###  Image → PDF
 
 | Feature | Status |
 |---------|:------:|
@@ -211,6 +213,19 @@ Additional modules will be introduced incrementally as the platform evolves.
 | Downloadable PDF Response | ✅ |
 | In-Memory Processing | ✅ |
 
+### PDF → Image
+
+| Feature                   | Status |
+| ------------------------- | :----: |
+| PDF Validation            |    ✅   |
+| Corrupted PDF Detection   |    ✅   |
+| Multi-page PDF Rendering  |    ✅   |
+| Page-to-Image Conversion  |    ✅   |
+| ZIP Archive Generation    |    ✅   |
+| Downloadable ZIP Response |    ✅   |
+| Apache PDFBox Rendering   |    ✅   |
+| In-Memory Processing      |    ✅   |
+
 ---
 
 ## 🏗 Engineering Practices
@@ -218,7 +233,7 @@ Additional modules will be introduced incrementally as the platform evolves.
 | Practice | Status |
 |---------|:------:|
 | Layered Architecture | ✅ |
-| Feature-Oriented Modules | ✅ |
+| Feature-Oriented Organization | ✅ |
 | DTO Pattern | ✅ |
 | Constructor Injection | ✅ |
 | Dependency Injection | ✅ |
@@ -233,31 +248,34 @@ Additional modules will be introduced incrementally as the platform evolves.
 
 ### Current Development Progress
 
-| Module | Status |
-|---------|:------:|
-| 🚀 Project Foundation | ✅ Complete |
-| 🔐 Authentication & Security | ✅ Complete |
-| 📄 Image → PDF Utility | ✅ Complete |
-| 🖼 PDF → Image Utility | 🚧 In Progress |
-| 📚 OCR Module | ⏳ Planned |
-| 🤖 AI Services | ⏳ Planned |
-| 🧠 Knowledge Platform | ⏳ Planned |
-| 🚀 Version 1.0 (Platform MVP) | 🎯 Target |
+| Module                       |       Status      |
+| ---------------------------- | :---------------: |
+| 🚀 Project Foundation        |     ✅ Complete    |
+| 🔐 Authentication & Security |     ✅ Complete    |
+| 📄 Image → PDF               |     ✅ Complete    |
+| 🖼 PDF → Image               |     ✅ Complete    |
+| 📚 PDF Utilities             | 🚧 Next Milestone |
+| 🖼 Image Utilities           |     ⏳ Planned     |
+| 👁 OCR                       |     ⏳ Planned     |
+| 🤖 AI Services               |     ⏳ Planned     |
+| 🧠 Knowledge Platform        |     ⏳ Planned     |
+| 🚀 Version 1.0               |     🎯 Target     |
+
 
 ---
 
 ### Current Release
 
-**v0.6.0**
+**v0.7.0**
 
-The project has successfully completed:
+The project has successfully established the Document Processing Foundation by completing:
 
 - Spring Boot Foundation
-- Authentication Module
-- Security Module
-- Image → PDF Utility
+- Authentication & Security
+- Image → PDF
+- PDF → Image
 
-The repository has now entered the **feature expansion phase**, where additional document-processing capabilities will be introduced while preserving the existing architecture.
+The next development milestone focuses on expanding the PDF Processing capabilities while continuing to strengthen the platform's engineering quality.
 
 ---
 
@@ -278,11 +296,13 @@ C --> D[⚙ Services]
 
 D --> E[(🗄 PostgreSQL)]
 
-C --> F[📄 Utility Modules]
+C --> F[📄 Document Processing]
 
 F --> G[🖼 Image → PDF]
 
-F --> H[📄 Future Utilities]
+F --> H[🖼 PDF → Image]
+
+F --> I[📄 Future Utilities]
 ```
 
 ### Request Lifecycle
@@ -290,23 +310,26 @@ F --> H[📄 Future Utilities]
 ```mermaid
 sequenceDiagram
 
-participant Client
-participant Controller
-participant Service
-participant PDFBox
-participant Response
+    participant Client
+    participant Controller
+    participant Service
+    participant PDFBox
+    participant ZIP
+    participant Response
 
-Client->>Controller: Upload Images
+    Client->>Controller: Upload PDF
 
-Controller->>Service: Validate Request
+    Controller->>Service: Validate PDF
 
-Service->>PDFBox: Generate PDF
+    Service->>PDFBox: Render Pages
 
-PDFBox-->>Service: PDF Bytes
+    PDFBox-->>Service: Buffered Images
 
-Service-->>Controller: ByteArrayResource
+    Service->>ZIP: Package Images
 
-Controller-->>Client: Download PDF
+    ZIP-->>Controller: ZIP Bytes
+
+    Controller-->>Client: Download ZIP
 ```
 
 ### Engineering Principles
@@ -473,6 +496,7 @@ The application is now ready for API testing using Postman or any REST client.
 | Method | Endpoint | Description |
 |---------|----------|-------------|
 | POST | `/api/v1/utilities/image-to-pdf` | Convert multiple images into a downloadable PDF |
+|POST| `/api/v1/utilities/pdf-to-image`|Convert a PDF into a ZIP archive of images|
 
 ---
 
@@ -558,33 +582,56 @@ If your environment already uses the correct timezone or a different database co
 
 ## ✅ Completed
 
-- [x] Spring Boot Project Setup
-- [x] PostgreSQL Integration
-- [x] Docker Development Environment
-- [x] Layered Modular Architecture
-- [x] JWT Authentication
-- [x] Role-Based Authorization
-- [x] Image → PDF Utility
+### v0.5.x – Platform Foundation
+
+- Spring Boot
+- PostgreSQL
+- Docker
+- Layered Architecture
+- JWT Authentication
+- Role-Based Authorization
+
+### v0.6.x – Image → PDF
+
+- Image Validation
+- Multi-image Upload
+- PDF Generation
+- Downloadable PDF Response
+
+### v0.7.0 – Document Processing Foundation
+
+- PDF Validation
+- Corrupted PDF Detection
+- PDF Rendering
+- ZIP Packaging
+- Downloadable Image Archive
 
 ---
 
 ## 🚧 Currently in Progress
 
-- [ ] PDF → Image Utility
+v0.8.x – PDF Utilities
+
+- Merge PDF
+- Split PDF
+- Extract PDF Pages
 
 ---
 
 ## 📌 Planned
 
-- [ ] Merge PDF
-- [ ] Split PDF
-- [ ] Image Compression
-- [ ] Image Resizing
-- [ ] OCR Integration
-- [ ] AI Document Summary
-- [ ] AI Quiz Generation
-- [ ] Semantic Search
-- [ ] Personal Knowledge Management
+v0.9.x – Image Utilities
+
+- Compress Images
+- Resize Images
+- Rotate Images
+- Convert Formats
+
+Future
+
+- OCR
+- AI Services
+- Knowledge Platform
 
 ---
 

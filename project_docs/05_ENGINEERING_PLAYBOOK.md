@@ -1,6 +1,6 @@
 # PRODUCTIVITY & KNOWLEDGE PLATFORM
 
-# 05_LEARNING_LOG.md
+# 05_ENGINEERING_PLAYBOOK.md
 
 ---
 
@@ -12,8 +12,8 @@
 | Document | Learning Log |
 | Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Utility Module v1 (Image → PDF) |
-| Current Milestone | Utility Module v2 (PDF → Image) |
+| Last Updated Milestone | v0.6.1 – Platform Foundation |
+| Current Milestone | v0.7.0 – Document Processing Foundation |
 
 ---
 
@@ -231,7 +231,7 @@ Status
 
 Good Understanding
 
-The first production-inspired utility module has been completed.
+The first production-inspired document processing capability has been completed.
 
 Concepts mastered
 
@@ -277,7 +277,7 @@ Image Decoding
 
 ↓
 
-Business Processing
+Document Processing
 
 ↓
 
@@ -293,6 +293,7 @@ Topics for future improvement
 - Temporary file storage
 - Asynchronous processing
 - Memory optimization
+- Multi-file response handling
 
 ---
 
@@ -570,7 +571,7 @@ Implemented
 
 Current understanding
 
-Different business modules may define their own exceptions while continuing to use a centralized error response structure.
+Different document processing features may define their own exceptions while continuing to use a centralized error response structure.
 
 Future
 
@@ -666,7 +667,7 @@ Security
 
 ↓
 
-Utility Modules
+Document Processing Features
 
 ---
 
@@ -690,7 +691,7 @@ Examples
 
 "Which class owns this responsibility?"
 
-"Should this belong in the shared service layer or inside the utility module?"
+"Should this responsibility belong in the shared service layer or inside a document processing feature?"
 
 "Does this implementation justify another abstraction?"
 
@@ -760,10 +761,9 @@ YAGNI
 Programming to Interfaces
 
 Future interview topics
-
-- PDF processing
-- File streaming
-- Transactions
+- Document Processing Pipelines
+- ZIP Archive Generation
+- Resource Management
 - Caching
 - Asynchronous processing
 - Performance optimization
@@ -779,7 +779,7 @@ The following topics have been intentionally postponed until the project natural
 - OAuth2
 - Email Verification
 - Automated Testing
-- Async Utility Processing
+- Async Document Processing
 - Object Storage
 - OCR
 - AI Integration
@@ -790,11 +790,11 @@ These topics should continue to be introduced through future milestones rather t
 
 # 16. Next Learning Objectives
 
-Current milestone
+### Current milestone
 
-Utility Module v2 – PDF → Image
+v0.7.0 – Document Processing Foundation (PDF → Image)
 
-Expected concepts
+### Expected concepts
 
 PDF Parsing
 
@@ -804,7 +804,11 @@ Page Rendering
 
 ↓
 
-ZIP Generation
+Image Generation
+
+↓
+
+ZIP Archive Creation
 
 ↓
 
@@ -820,7 +824,7 @@ Resource Cleanup
 
 ↓
 
-Performance Considerations
+Processing Pipeline Design
 
 These concepts should continue to be learned through real feature implementation rather than isolated examples.
 
@@ -887,7 +891,7 @@ By the end of the project, the developer should be comfortable with:
 - Backend architecture
 - Production-grade file processing
 - Secure API development
-- Utility platform design
+- Document platform design
 - AI integrations
 - Scalable system design
 - Production engineering practices

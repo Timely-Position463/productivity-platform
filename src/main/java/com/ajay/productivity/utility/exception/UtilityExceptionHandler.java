@@ -1,6 +1,7 @@
-package com.ajay.productivity.utility.imageToPdf.exception;
+package com.ajay.productivity.utility.exception;
 
 import com.ajay.productivity.dto.ApiErrorResponse;
+import com.ajay.productivity.utility.pdfToImage.exception.PdfToImageException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.Ordered;
@@ -58,8 +59,20 @@ public class UtilityExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<ApiErrorResponse> MethodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException e,HttpServletRequest request){
+    public ResponseEntity<ApiErrorResponse> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException e, HttpServletRequest request){
         HttpStatus status=HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(handler.buildErrorResponse(status,e.getMessage(),request));
+    }
+
+    @ExceptionHandler(InvalidPdfException.class)
+    public ResponseEntity<ApiErrorResponse> invalidPdfExceptionHandler(InvalidPdfException e,HttpServletRequest request){
+        HttpStatus status=HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(handler.buildErrorResponse(status,e.getMessage(),request));
+    }
+
+    @ExceptionHandler(PdfToImageException.class)
+    public ResponseEntity<ApiErrorResponse> pdfToImageExceptionHandler(PdfToImageException e,HttpServletRequest request){
+        HttpStatus status=HttpStatus.INTERNAL_SERVER_ERROR;
         return ResponseEntity.status(status).body(handler.buildErrorResponse(status,e.getMessage(),request));
     }
 

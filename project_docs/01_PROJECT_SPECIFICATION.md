@@ -11,8 +11,8 @@
 | Document | Project Specification |
 | Version | 3.0 |
 | Status | Living Document |
-| Last Updated Milestone | Utility Module v1 (Image → PDF) |
-| Current Milestone | Utility Module v2 (PDF → Image) |
+| Last Updated Milestone | Document Processing v2 (PDF → Image) |
+| Current Milestone | Document Processing Foundation |
 | Architecture | Layered Modular Monolith |
 | Primary Language | Java 21 |
 | Framework | Spring Boot 3.5.x |
@@ -45,34 +45,54 @@ The project simultaneously serves as:
 
 # 2. Product Vision
 
-The application begins as a Utility Platform.
+The application begins as a Document Processing Platform.
 
-Eventually it evolves into a complete Productivity & Knowledge Platform.
+Its first responsibility is to provide reliable document-processing capabilities.
 
-Long-term vision:
+### Current capabilities include:
+
+• Image → PDF
+
+• PDF → Image
+
+### Future capabilities include:
+
+• Merge
+
+• Split
+
+• OCR
+
+• Preview
+
+• Metadata
+
+• AI-assisted processing
+
+These capabilities form the foundation of the larger Productivity & Knowledge Platform.
+
+### Long-term vision:
 
 ```
-                Productivity Platform
+                Productivity & Knowledge Platform
 
-                         │
+                              │
 
-      ┌──────────────────┼──────────────────┐
+      ┌───────────────────────┼───────────────────────┐
 
-   Utilities          Knowledge          AI
+   Document Platform      Knowledge Platform      AI Platform
 
-      │                  │                │
+          │                      │                    │
 
- Image→PDF          Notes            OCR
+   Document Processing      Notes & Collections      OCR
 
- PDF→Image          Search           Summary
+   Document Management      Search                  Summarization
 
- Merge PDF          Tags             Quiz
+   Document Editing         Tags                    Quiz Generation
 
- Split PDF          Collections      Flashcards
+   File History             Categories              Flashcards
 
- Compress           History          Semantic Search
-
- Resize             Saved Files      Knowledge Graph
+   Versioning               Saved Documents         Semantic Search
 ```
 
 Every module should naturally build upon previous modules.
@@ -128,31 +148,29 @@ rather than tutorial shortcuts.
 
 The project is intentionally designed to evolve.
 
-Phase 1
-
-Authentication
+Platform Foundation
 
 ↓
 
-Phase 2
-
-Utilities
+Document Foundation
 
 ↓
 
-Phase 3
-
-OCR
+Document Processing
 
 ↓
 
-Phase 4
-
-AI
+Document Editing
 
 ↓
 
-Phase 5
+Document Platform
+
+↓
+
+AI & Intelligence
+
+↓
 
 Knowledge Platform
 
@@ -202,16 +220,13 @@ The platform should allow users to:
 
 ### Guest Users
 
-- Use basic utilities.
-- No account required.
-- No history stored.
+- Access supported document-processing capabilities.
 
 ### Registered Users
 
-- Access utilities.
-- Save history.
-- Manage generated files.
-- Use future AI features.
+- Access document-processing capabilities.
+- View processing history.
+- Manage processed documents.
 
 ### Administrators
 
@@ -222,6 +237,15 @@ The platform should allow users to:
 ---
 
 # 6. Functional Requirements
+The platform is organized into the following functional modules:
+
+- Authentication Module
+- Document Processing Module
+- User Module
+- Knowledge Module
+- AI Module
+
+Each module evolves independently while contributing to the overall platform.
 
 ## Authentication Module
 
@@ -292,9 +316,9 @@ Future
 - Email Verification
 
 ---
-# 7. Utility Module
+# 7. Document Processing Module
 
-## Utility Module v1 (Completed)
+## Implemented Capabilities (v0.6.0)
 
 ### Image → PDF
 
@@ -349,26 +373,74 @@ Create UtilityJob
 
 Store History
 
+```
+## Implemented Capabilities (v0.7.0)
+
+
+### PDF → Image
+
+The second document-processing capability has been successfully implemented.
+
+Guest users can upload a PDF document and receive all rendered pages as high-quality images packaged into a ZIP archive.
+
+### Supported Features
+
+- Upload a single PDF document.
+- PDF validation before processing.
+- Corrupted PDF detection.
+- Configurable image format.
+- High-quality page rendering.
+- Automatic ZIP packaging.
+- In-memory processing.
+- Standardized API error responses.
+
+### Guest User Workflow
+
+```
+Upload PDF
+
+↓
+
+Validate PDF
+
+↓
+
+Render Pages
+
+↓
+
+Package Images
+
+↓
+
+Download ZIP
+```
+
+### Authenticated User (Planned)
+
+```
+Upload PDF
+
+↓
+
+Render Pages
+
+↓
+
+Create Processing Job (UtilityJob)
+
+↓
+
+Store History
+
 ↓
 
 View Previous Conversions
 ```
-
----
-
-## Upcoming Utility Modules
-
-- PDF → Image
-- Merge PDF
-- Split PDF
-- Compress Image
-- Resize Image
-- Rotate Image
-- Watermark PDF
-- Extract Pages
 ---
 
 # 8. Knowledge Module
+The Knowledge Module builds upon processed documents, enabling users to organize, search, and learn from their content.
 
 Planned
 
@@ -384,9 +456,35 @@ Features:
 
 # 9. AI Module
 
-Planned
+### Planned
 
-Features
+Documents
+
+↓
+
+OCR
+
+↓
+
+Content Extraction
+
+↓
+
+Summarization
+
+↓
+
+Quiz Generation
+
+↓
+
+Flashcards
+
+↓
+
+Knowledge Extraction
+
+### Features
 
 OCR
 
@@ -435,7 +533,9 @@ Future
 
 # 11. Job Management
 
-Every utility execution should become a UtilityJob.
+Every document-processing request should be represented as a Processing Job.
+
+The current implementation uses the UtilityJob entity, which provides the foundation for processing history, monitoring, and future asynchronous execution.
 
 Responsibilities:
 
@@ -474,7 +574,7 @@ Readable code preferred over clever code.
 
 Authentication providers should be replaceable.
 
-Utility modules should be independent.
+Document processing capabilities should remain modular and reusable.
 
 Future AI integrations should require minimal architectural changes.
 
@@ -540,67 +640,53 @@ Meaningful logging.
 
 ## Completed
 
-✔ Spring Boot Setup
+### v0.6.x – Platform Foundation
 
-✔ PostgreSQL
+- Spring Boot Setup
+- PostgreSQL
+- Docker
+- JWT Authentication
+- Role-based Authorization
+- Global Exception Handling
+- Image → PDF
 
-✔ Docker
-
-✔ Layered Architecture
-
-✔ DTO Pattern
-
-✔ Validation
-
-✔ Spring Security
-
-✔ JWT Authentication
-
-✔ Role-based Authorization
-
-✔ Global Exception Handling
-
-✔ Utility Module v1 – Image → PDF
-
----
-
-## Current
-
-Utility Module v2
+### v0.7.0 – Document Processing Foundation
 
 - PDF → Image
+- PDF Validation
+- PDF Rendering
+- ZIP Packaging
+- Corrupted PDF Detection
 
 ---
 
-## Planned Utility Features
+## Current Focus
+
+### v0.8.x – Document Processing Expansion
 
 - Merge PDF
 - Split PDF
+- Extract Pages
+
+---
+
+## Future
+
+### Document Processing
+
 - Compress Image
 - Resize Image
 - Rotate Image
 - Watermark PDF
 
----
+### AI & Knowledge
 
-## Medium-Term
-
-OCR
-
-AI Integration
-
----
-
-## Long-Term
-
-Knowledge Platform
-
-Semantic Search
-
-Document Management
+- OCR
+- AI Integration
+- Knowledge Platform
+- Semantic Search
 
 ---
-
 # 14. Success Criteria
 
 The project is considered successful if it demonstrates:
@@ -608,8 +694,8 @@ The project is considered successful if it demonstrates:
 - Strong backend architecture
 - Clean REST API design
 - Proper authentication
-- Production-inspired file processing
-- Modular utility architecture
+- Reusable document processing architecture
+- Extensible platform design
 - AI integration
 - Modular growth
 - Production-inspired engineering practices
@@ -625,18 +711,22 @@ The developer (Ajay) should finish the project understanding:
 
 ---
 
-# 15. Current Project Status
-
 ## Completed
 
 - Authentication Module v1
-- Utility Module v1 – Image → PDF
+- Document Processing Foundation
+    - Image → PDF
+    - PDF → Image
 
 ## Current Focus
 
-Utility Module v2
+v0.8.x – Document Processing Expansion
 
-- PDF → Image
+Upcoming capabilities:
+
+- Merge PDF
+- Split PDF
+- Extract Pages
 
 ## Long-Term Vision
 

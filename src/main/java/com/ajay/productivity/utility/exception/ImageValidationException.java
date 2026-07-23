@@ -1,4 +1,4 @@
-package com.ajay.productivity.utility.imageToPdf.exception;
+package com.ajay.productivity.utility.exception;
 
 public class ImageValidationException extends RuntimeException {
     public ImageValidationException(String message) {
