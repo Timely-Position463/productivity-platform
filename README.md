@@ -294,7 +294,7 @@ B --> C[🎮 Controllers]
 
 C --> D[⚙ Services]
 
-D --> E[(🗄 PostgreSQL)]
+D --> E[(🗄 PostgresSQL)]
 
 C --> F[📄 Document Processing]
 

@@ -16,12 +16,25 @@ public class TemporaryFileServiceImpl implements TemporaryFileService {
     @Override
     public Path createTemporaryFile(MultipartFile file){
         try {
-            Path tempFile = Files.createTempFile("document-",".pdf");
+            String suffix=getExtension(file.getOriginalFilename());
+            Path tempFile = Files.createTempFile("document-",suffix);
             file.transferTo(tempFile.toFile());
             return tempFile;
         }catch (IOException e){
             throw new TemporaryFileException("Failed to create Temporary file",e);
         }
+    }
+
+    private String getExtension(String fileName){
+        if( fileName==null || fileName.isBlank()){
+            return ".tmp";
+        }
+        int lastIndex=fileName.lastIndexOf('.');
+        if(lastIndex<1 || lastIndex==fileName.length()-1){
+            return ".tmp";
+        }
+        return fileName.substring(lastIndex);
+
     }
 
     @Override

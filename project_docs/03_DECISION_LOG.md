@@ -1193,47 +1193,142 @@ Positive
 - Simplifies future feature organization
 
 ---
-### Future Impact
+# Engineering Philosophy Decisions
 
----
+## ADR-034 – Outcome-Oriented Release Philosophy
 
-# Future ADRs
+### Status: Accepted
 
-Examples of future decisions:
+### Context
 
-ADR-030
+The project is expected to evolve over many releases. Organizing releases by technologies (e.g., Swagger, Docker, Postman) makes the roadmap difficult to understand and does not communicate the engineering value delivered.
 
-PDF → Image Library Selection
+### Decision
 
-ADR-031
+Feature and engineering releases will be organized around the engineering problem they solve rather than the technologies they introduce.
 
-File Storage Strategy
+### Rationale
 
-ADR-032
+This approach communicates the purpose of each release, improves project storytelling, and mirrors how professional engineering teams plan work.
 
-OCR Library Selection
+### Consequences
 
-ADR-033
+#### Positive
 
-AI Provider Strategy
+Clear release objectives.
+Better changelog and release notes.
+Stronger portfolio presentation.
 
-ADR-034
+### Trade-offs
 
-Background Job Processing
+Requires release planning before implementation.
+Review
 
-ADR-035
+Review whenever the release strategy no longer reflects the project's growth.
 
-Caching Strategy
+## ADR-035 – Risk-Based Testing Strategy
 
-ADR-036
+### Status: Accepted
 
-Asynchronous Document Processing
+### Context
 
-ADR-037
+Testing every class with the same level of effort provides diminishing returns and slows development.
 
-Testing Strategy
+### Decision
 
----
+Testing effort will be proportional to engineering risk. Business logic and critical workflows receive the highest priority, while simple orchestration around well-tested libraries receives lightweight integration testing.
+
+### Rationale
+
+The goal is high engineering confidence rather than maximum code coverage.
+
+### Consequences
+
+#### Positive
+
+Faster development.
+Meaningful tests.
+Better maintenance.
+
+### Trade-offs
+
+Some low-risk components will intentionally have minimal test coverage.
+Review
+
+Review before major releases or when introducing security, persistence, or asynchronous processing.
+
+## ADR-036 – Independent API Versioning Strategy
+
+### Status: Accepted
+
+### Context
+
+Application releases evolve more frequently than API contracts.
+
+### Decision
+
+Application versions and API versions are managed independently.
+
+Application Version: GitHub releases (e.g., v0.7.1)
+API Version: Stable contract (e.g., v1)
+
+### Rationale
+
+API clients should not be forced to migrate simply because the application has a new release.
+
+### Consequences
+
+#### Positive
+
+Stable API contract.
+Easier backward compatibility.
+Aligns with industry practices.
+
+### Trade-offs
+
+Requires maintaining API compatibility over time.
+Review
+
+Review whenever a breaking API change is introduced.
+
+## ADR-037 – Developer Experience Before Feature Expansion
+
+### Status: Accepted
+
+### Context
+
+The project has reached a stage where functionality exists but is not yet easy for developers or recruiters to evaluate.
+
+### Decision
+
+Improve developer onboarding and project accessibility before introducing the next feature milestone.
+
+This includes:
+
+OpenAPI/Swagger documentation
+API documentation improvements
+Postman collections
+Developer onboarding documentation
+
+### Rationale
+
+A project that is easy to understand, explore, and evaluate provides greater engineering value than one that only accumulates features.
+
+### Consequences
+
+#### Positive
+
+Better onboarding.
+Improved portfolio quality.
+Easier collaboration.
+
+### Trade-offs
+
+Short delay before implementing additional document-processing features.
+Review
+
+Review once the developer experience objectives have been completed.
+
 
 # Decision Review Policy
 

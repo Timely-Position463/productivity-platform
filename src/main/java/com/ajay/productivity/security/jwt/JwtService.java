@@ -71,11 +71,5 @@ public class JwtService {
         return Keys.hmacShaKeyFor(properties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
 
-    @PostConstruct
-    public void verifySecret() {
-//        System.out.println("JWT Secret = " + properties.getSecret());
-//        System.out.println("Length = " + properties.getSecret().length());
-        log.info("JWT Configuration loaded.");
-    }
 
 }
