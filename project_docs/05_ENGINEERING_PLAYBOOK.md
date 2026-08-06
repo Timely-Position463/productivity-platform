@@ -6,14 +6,14 @@
 
 # Document Information
 
-| Field | Value |
-|-------|-------|
-| Project | Productivity & Knowledge Platform |
-| Document | Learning Log |
-| Version | 3.0 |
-| Status | Living Document |
-| Last Updated Milestone | v0.6.1 – Platform Foundation |
-| Current Milestone | v0.7.0 – Document Processing Foundation |
+| Field | Value                                   |
+|-------|-----------------------------------------|
+| Project | Productivity & Knowledge Platform       |
+| Document | Learning Log                            |
+| Version | 3.0                                     |
+| Status | Living Document                         |
+| Last Updated Milestone | v0.7.1 – Platform Foundation            |
+| Current Milestone | v0.8.0 – Document Processing Foundation |
 
 ---
 
@@ -221,7 +221,18 @@ N+1 problem
 
 Entity Graphs
 
-Specifications
+Specifications]\
+
+## Developer Experience
+
+Every engineering release should improve at least one of:
+
+- Local development
+- Documentation
+- Testing
+- Tooling
+- CI/CD
+- Deployment
 
 ---
 

@@ -6,14 +6,14 @@
 
 # Document Information
 
-| Field | Value |
-|-------|-------|
-| Project | Productivity & Knowledge Platform |
-| Document | Development Guide |
-| Version | 3.0 |
-| Status | Living Document |
-| Last Updated Milestone | v0.6.1 – Platform Foundation |
-| Current Milestone | v0.7.0 – Document Processing Foundation |
+| Field | Value                                   |
+|-------|-----------------------------------------|
+| Project | Productivity & Knowledge Platform       |
+| Document | Development Guide                       |
+| Version | 3.0                                     |
+| Status | Living Document                         |
+| Last Updated Milestone | v0.7.1 – Platform Foundation            |
+| Current Milestone | v0.8.0 – Document Processing Foundation |
 ---
 
 # 1. Purpose

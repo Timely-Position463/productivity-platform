@@ -12,7 +12,7 @@
 | Document | Development Roadmap                     |
 | Version | 3.0                                     |
 | Status | Living Document                         |
-| Last Updated Milestone | v0.7.0 – Document Processing Foundation |
+| Last Updated Milestone | v0.7.1 – Document Processing Foundation |
 | Current Milestone | v0.8.x – Document Processing Expansion  |
 ---
 

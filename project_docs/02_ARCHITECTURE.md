@@ -6,14 +6,14 @@
 
 # Document Information
 
-| Field | Value |
-|-------|-------|
-| Project | Productivity & Knowledge Platform |
-| Document | Architecture |
-| Version | 3.0 |
-| Status | Living Document |
-| Last Updated Milestone |  v0.7.0 – Document Processing Foundation |
-| Current Milestone |  v0.8.x – Document Processing Expansion |
+| Field | Value                                   |
+|-------|-----------------------------------------|
+| Project | Productivity & Knowledge Platform       |
+| Document | Architecture                            |
+| Version | 3.0                                     |
+| Status | Living Document                         |
+| Last Updated Milestone | v0.7.1 – Document Processing Foundation |
+| Current Milestone | v0.8.x – Document Processing Expansion  |
 ---
 
 # 1. Architecture Overview

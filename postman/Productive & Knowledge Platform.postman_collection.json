@@ -1,0 +1,193 @@
+{
+  "info": {
+    "_postman_id": "7b4bcaa3-2bd7-4cb0-b17c-2e6a5c44bef7",
+    "name": "Productive & Knowledge Platform",
+    "description": "Postman collection for testing the Productivity & Knowledge Platform REST API.\n\nThis collection demonstrates the complete API workflow including:\n\n- User authentication\n    \n- Document processing\n    \n- User management\n    \n- Health monitoring\n    \n\nAuthentication is handled using JWT Bearer tokens. The Login request automatically stores the JWT in the active environment for use by protected endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48882116",
+    "_collection_link": "https://go.postman.co/collection/48882116-7b4bcaa3-2bd7-4cb0-b17c-2e6a5c44bef7?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Creates a new user account.\n\nReturns the created user information if registration succeeds."
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Get all Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Returns a paginated list of registered users.\n\nAuthentication is required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Returns a specified user based on their userID.\n\nAuthentication required."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User By Email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Returns a specified user based on their email address.\n\nAuthentication required."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Document Utilities",
+      "item": [
+        {
+          "name": "Pdf-to-Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "2646657a-ed85-43ff-b23d-6c5ef7209922",
+                  "src": "/C:/Users/Ajay kumar/Downloads/s00521-025-11604-9.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/utilities/pdf-to-image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "utilities",
+                "pdf-to-image"
+              ]
+            },
+            "description": "Accepts PDFs and returns zip file of images.\n\nRejects other file types and corrupted PDFs."
+          },
+          "response": []
+        },
+        {
+          "name": "Image-to-PDF",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "2646657a-ed85-43ff-b23d-6c5ef7209922",
+                  "src": "/C:/Users/Ajay kumar/Downloads/600-kb.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/utilities/image-to-pdf",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "utilities",
+                "image-to-pdf"
+              ]
+            },
+            "description": "Accepts PNG, JPEG type images.\n\nReturns a PDF."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "Shows the status of the application along with the title."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "jwt",
+      "secret": true
+    }
+  ]
+}

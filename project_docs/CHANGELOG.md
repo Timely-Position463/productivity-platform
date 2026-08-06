@@ -6,6 +6,25 @@ The format is inspired by **Keep a Changelog**, and the project follows **Semant
 
 ---
 
+# v0.7.1 - Developer Experience
+
+## Added
+
+- Docker & Docker Compose support
+- Environment-based configuration (.env)
+- .env.example template
+- Swagger/OpenAPI documentation
+- Postman Collection & Environment
+- Developer onboarding improvements
+- README redesign
+
+## Improved
+
+- Local development workflow
+- Project documentation
+- Release documentation
+- Platform onboarding experience
+
 ## [v0.7.0] - PDF to Image Utility
 
 ### Added
@@ -178,3 +197,9 @@ The format is inspired by **Keep a Changelog**, and the project follows **Semant
 - OCR Module
 - AI Integration
 - Knowledge Platform
+
+
+
+## Notes
+
+This engineering release focuses on improving developer experience rather than introducing new platform capabilities.

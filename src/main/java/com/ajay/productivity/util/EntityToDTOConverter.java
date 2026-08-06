@@ -9,12 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EntityToDTOConverter {
     public UserResponse userToUserResponse(User user){
-        return new UserResponse(user.getId(),user.getUsername(), user.getEmail(),
-                user.getJobs()
-                        .stream()
-                        .map(this::jobToJobResponse)
-                        .toList()
-        );
+        return new UserResponse(user.getId(),user.getUsername(), user.getEmail());
     }
 
     public JobResponse jobToJobResponse(UtilityJob job){

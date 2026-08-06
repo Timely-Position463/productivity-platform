@@ -6,14 +6,14 @@
 
 # Document Information
 
-| Field | Value |
-|-------|-------|
-| Project | Productivity & Knowledge Platform |
-| Document | Project Handoff |
-| Version | 3.0 |
-| Status | Active |
-| Last Updated | v0.6.1 – Platform Foundation |
-| Current Milestone | v0.7.0 – Document Processing Foundation |
+| Field | Value                                   |
+|-------|-----------------------------------------|
+| Project | Productivity & Knowledge Platform       |
+| Document | Project Handoff                         |
+| Version | 3.0                                     |
+| Status | Active                                  |
+| Last Updated | v0.7.1 – Platform Foundation            |
+| Current Milestone | v0.8.1 – Document Processing Foundation |
 
 ---
 

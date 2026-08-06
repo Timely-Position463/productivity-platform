@@ -1,0 +1,17 @@
+.env
+.gitattributes
+.gitignore
+.github
+.repomixignore
+repomix-output.*
+.idea
+
+*.pdf
+*.md
+*.store
+*.log
+
+./assets
+./project_docs
+
+LICENSE
