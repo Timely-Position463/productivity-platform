@@ -55,3 +55,4 @@ build/
 
 # Generated files
 *.pdf
+!src/test/resources/pdf/file.pdf
